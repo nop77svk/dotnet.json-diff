@@ -2,11 +2,10 @@
 
     <PropertyGroup>
         <OutputType>Library</OutputType>
-		<TargetFramework>netstandard2.1</TargetFramework>
 
-        <RootNamespace>NoP77svk.JsonDiff</RootNamespace>
-        <AssemblyName>NoP77svk.JsonDiff</AssemblyName>
-        <PackageId>NoP77svk.JsonDiff</PackageId>
+        <RootNamespace>NoP77svk.JsonCompare</RootNamespace>
+        <AssemblyName>NoP77svk.JsonCompare</AssemblyName>
+        <PackageId>NoP77svk.JsonCompare</PackageId>
         <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     </PropertyGroup>
 
