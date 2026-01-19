@@ -19,6 +19,9 @@ public static class JsonDiff
     public record Difference<TNode>(string NodePath, DifferenceSide Side, TNode NodeValue);
 #pragma warning restore SA1313
 
+    public static IEnumerable<Difference<TNode>> CompareWith<TNode>(this TNode leftDocument, TNode rightDocument, IJsonDiffNodeValuesSelector<TNode> valueSelector)
+        => EnumerateDifferences(@"$", leftDocument, rightDocument, valueSelector);
+
     public static IEnumerable<Difference<JsonElement>> CompareWith(this JsonDocument leftDocument, JsonDocument rightDocument)
         => leftDocument.RootElement.CompareWith(rightDocument.RootElement);
 

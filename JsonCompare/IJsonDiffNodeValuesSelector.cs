@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
-internal interface IJsonDiffNodeValuesSelector<TNode>
+public interface IJsonDiffNodeValuesSelector<TNode>
 {
     JsonValueKind GetValueKind(TNode node);
     string GetStringValue(TNode node);
