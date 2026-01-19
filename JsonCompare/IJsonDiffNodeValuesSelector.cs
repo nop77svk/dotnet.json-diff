@@ -45,7 +45,7 @@ internal class JsonNodeDiffValuesSelector : IJsonDiffNodeValuesSelector<JsonNode
 
     public static JsonNodeDiffValuesSelector Instance { get; } = new JsonNodeDiffValuesSelector();
 
-    public JsonValueKind GetValueKind(JsonNode node) => node?.GetValue<JsonValueKind>() ?? JsonValueKind.Null;
+    public JsonValueKind GetValueKind(JsonNode node) => node?.GetValueKind() ?? JsonValueKind.Null;
 
     public string GetStringValue(JsonNode node) => node?.GetValue<string>() ?? string.Empty;
 

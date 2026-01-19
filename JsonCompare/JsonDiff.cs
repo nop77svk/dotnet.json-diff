@@ -30,12 +30,27 @@ public static class JsonDiff
 
     private static IEnumerable<Difference<TNode>> EnumerateDifferences<TNode>(string jsonPath, TNode leftNode, TNode rightNode, IJsonDiffNodeValuesSelector<TNode> valueSelector)
     {
-        if (valueSelector.GetValueKind(leftNode) != valueSelector.GetValueKind(rightNode))
+        JsonValueKind leftValueKind = valueSelector.GetValueKind(leftNode);
+        JsonValueKind rightValueKind = valueSelector.GetValueKind(rightNode);
+
+        if (leftValueKind is JsonValueKind.True or JsonValueKind.False
+            && rightValueKind is JsonValueKind.True or JsonValueKind.False)
+        {
+            bool valueLeft = leftValueKind is JsonValueKind.True;
+            bool valueRight = rightValueKind is JsonValueKind.True;
+
+            if (valueLeft != valueRight)
+            {
+                yield return new Difference<TNode>(jsonPath, DifferenceSide.Left, leftNode);
+                yield return new Difference<TNode>(jsonPath, DifferenceSide.Right, rightNode);
+            }
+        }
+        else if (leftValueKind != rightValueKind)
         {
             yield return new Difference<TNode>(jsonPath, DifferenceSide.Left, leftNode);
             yield return new Difference<TNode>(jsonPath, DifferenceSide.Right, rightNode);
         }
-        else if (valueSelector.GetValueKind(leftNode) is JsonValueKind.String)
+        else if (leftValueKind is JsonValueKind.String)
         {
             if (!valueSelector.GetStringValue(leftNode).Equals(valueSelector.GetStringValue(rightNode)))
             {
@@ -43,7 +58,7 @@ public static class JsonDiff
                 yield return new Difference<TNode>(jsonPath, DifferenceSide.Right, rightNode);
             }
         }
-        else if (valueSelector.GetValueKind(leftNode) is JsonValueKind.Number)
+        else if (leftValueKind is JsonValueKind.Number)
         {
             decimal valueLeft = valueSelector.GetNumberValue(leftNode);
             decimal valueRight = valueSelector.GetNumberValue(rightNode);
@@ -54,19 +69,27 @@ public static class JsonDiff
                 yield return new Difference<TNode>(jsonPath, DifferenceSide.Right, rightNode);
             }
         }
-        else if (valueSelector.GetValueKind(leftNode) is JsonValueKind.Array)
+        else if (leftValueKind is JsonValueKind.Array)
         {
             foreach (var difference in EnumerateDifferences(jsonPath, valueSelector.GetArrayValues(leftNode), valueSelector.GetArrayValues(rightNode), valueSelector))
             {
                 yield return difference;
             }
         }
-        else if (valueSelector.GetValueKind(leftNode) is JsonValueKind.Object)
+        else if (leftValueKind is JsonValueKind.Object)
         {
             foreach (var difference in EnumerateDifferences(jsonPath, valueSelector.GetObjectProperties(leftNode), valueSelector.GetObjectProperties(rightNode), valueSelector))
             {
                 yield return difference;
             }
+        }
+        else if (leftValueKind is JsonValueKind.Null)
+        {
+            // NULLs are equal
+        }
+        else
+        {
+            throw new NotImplementedException($"Comparison for JSON value kind '{leftValueKind}' is not (yet) implemented.");
         }
     }
 
