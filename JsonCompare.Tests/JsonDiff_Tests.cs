@@ -32,7 +32,7 @@ public class JsonDiff_Tests
         using JsonDocument jsonDocument = await JsonDocument.ParseAsync(testCaseStream, _jsonDocumentParseOptions);
 
         // act
-        IEnumerable<JsonDiff.Difference<JsonElement>> differences = jsonDocument.CompareWith(jsonDocument);
+        IEnumerable<JsonDifference<JsonElement>> differences = jsonDocument.CompareWith(jsonDocument);
 
         // assert
         Assert.That(differences, Is.Empty);
@@ -48,7 +48,7 @@ public class JsonDiff_Tests
         Assert.That(jsonDocument, Is.Not.Null);
 
         // act
-        IEnumerable<JsonDiff.Difference<JsonNode?>> differences = jsonDocument?.CompareWith(jsonDocument)
+        IEnumerable<JsonDifference<JsonNode?>> differences = jsonDocument?.CompareWith(jsonDocument)
             ?? throw new InvalidOperationException("JsonNode parsing resulted in null");
 
         // assert

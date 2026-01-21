@@ -21,3 +21,15 @@ public interface IJsonDiffNodeValuesSelector<TNode>
 
     IEnumerable<JsonDiffArrayElementDescriptor<TNode>> GetObjectProperties(TNode? node);
 }
+
+public enum MatchJsonArrayElementsBy
+{
+    Position,
+    Key
+}
+
+public enum MatchJsonObjectPropertiesBy
+{
+    Name,
+    Position
+}

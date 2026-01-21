@@ -5,7 +5,7 @@ using System.Linq;
 
 public interface IJsonDiffFormatter<TNode>
 {
-    string DiffMessageFormatter(JsonDiff.Difference<TNode> difference);
+    string DiffMessageFormatter(JsonDifference<TNode> difference);
 }
 
 public class SimpleJsonDiffFormatter<TNode>
@@ -15,12 +15,12 @@ public class SimpleJsonDiffFormatter<TNode>
     public string RightSideChangeDescription { get; init; } = @"[-] Missing in left/extra in right";
     public string UnknownSideChangeDescription { get; init; } = @"?";
 
-    public string DiffMessageFormatter(JsonDiff.Difference<TNode> difference)
+    public string DiffMessageFormatter(JsonDifference<TNode> difference)
     {
         string diffIndicator = difference.Side switch
         {
-            JsonDiff.DifferenceSide.Left => LeftSideChangeDescription,
-            JsonDiff.DifferenceSide.Right => RightSideChangeDescription,
+            JsonDifferenceSide.Left => LeftSideChangeDescription,
+            JsonDifferenceSide.Right => RightSideChangeDescription,
             _ => UnknownSideChangeDescription,
         };
 
@@ -32,6 +32,6 @@ public class SimpleJsonDiffFormatter<TNode>
 
 public static class JsonDiffFormatterExtensions
 {
-    public static IEnumerable<string> AsFormattedStrings<TNode>(this IEnumerable<JsonDiff.Difference<TNode>> differences, IJsonDiffFormatter<TNode> options)
+    public static IEnumerable<string> AsFormattedStrings<TNode>(this IEnumerable<JsonDifference<TNode>> differences, IJsonDiffFormatter<TNode> options)
         => differences.Select(options.DiffMessageFormatter);
 }
