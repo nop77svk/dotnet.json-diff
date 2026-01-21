@@ -125,6 +125,13 @@ public class JsonDiff<TNode>
     }
 
     private IEnumerable<JsonDiff.Difference<TNode>> EnumerateArrayElementsDifferences(string jsonPath, IEnumerable<JsonDiffArrayElementDescriptor<TNode>> leftArray, IEnumerable<JsonDiffArrayElementDescriptor<TNode>> rightArray, IJsonDiffNodeValuesSelector<TNode> valueSelector)
+        => ArrayElementMatchingStrategy switch
+        {
+            MatchArrayElementsBy.Position => EnumerateArrayElementsDifferencesByPosition(jsonPath, leftArray, rightArray, valueSelector),
+            _ => throw new NotImplementedException($"Matching array elements by '{ArrayElementMatchingStrategy}' is not (yet) implemented."),
+        };
+
+    private IEnumerable<JsonDiff.Difference<TNode>> EnumerateArrayElementsDifferencesByPosition(string jsonPath, IEnumerable<JsonDiffArrayElementDescriptor<TNode>> leftArray, IEnumerable<JsonDiffArrayElementDescriptor<TNode>> rightArray, IJsonDiffNodeValuesSelector<TNode> valueSelector)
     {
         using IEnumerator<JsonDiffArrayElementDescriptor<TNode>> leftArrayEnumerator = leftArray.GetEnumerator();
         using IEnumerator<JsonDiffArrayElementDescriptor<TNode>> rightArrayEnumerator = rightArray.GetEnumerator();
@@ -164,6 +171,13 @@ public class JsonDiff<TNode>
     }
 
     private IEnumerable<JsonDiff.Difference<TNode>> EnumerateObjectPropertiesDifferences(string jsonPath, IEnumerable<JsonDiffArrayElementDescriptor<TNode>> leftObjectEnumerable, IEnumerable<JsonDiffArrayElementDescriptor<TNode>> rightObjectEnumerable, IJsonDiffNodeValuesSelector<TNode> valueSelector)
+        => ObjectPropertiesMatchingStrategy switch
+        {
+            MatchObjectPropertiesBy.Name => EnumerateObjectPropertiesDifferencesByName(jsonPath, leftObjectEnumerable, rightObjectEnumerable, valueSelector),
+            _ => throw new NotImplementedException($"Matching object properties by '{ObjectPropertiesMatchingStrategy}' is not (yet) implemented."),
+        };
+
+    private IEnumerable<JsonDiff.Difference<TNode>> EnumerateObjectPropertiesDifferencesByName(string jsonPath, IEnumerable<JsonDiffArrayElementDescriptor<TNode>> leftObjectEnumerable, IEnumerable<JsonDiffArrayElementDescriptor<TNode>> rightObjectEnumerable, IJsonDiffNodeValuesSelector<TNode> valueSelector)
     {
         var leftObjectGroupedByProperty = leftObjectEnumerable
             .ToLookup(
