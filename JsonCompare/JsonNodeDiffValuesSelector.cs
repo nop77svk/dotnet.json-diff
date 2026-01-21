@@ -9,11 +9,11 @@ public sealed class JsonNodeDiffValuesSelector : IJsonDiffNodeValuesSelector<Jso
 {
     public Func<int, JsonNode?, string>? ArrayElementDescriptorSelector { get; init; } = null;
 
-    private JsonNodeDiffValuesSelector()
+    public JsonNodeDiffValuesSelector()
     {
     }
 
-    public static JsonNodeDiffValuesSelector Instance { get; } = new JsonNodeDiffValuesSelector();
+    public static JsonNodeDiffValuesSelector DefaultInstance { get; } = new JsonNodeDiffValuesSelector();
 
     public JsonValueKind GetValueKind(JsonNode? node) => node?.GetValueKind() ?? JsonValueKind.Null;
 

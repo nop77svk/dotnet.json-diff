@@ -13,8 +13,8 @@ public static class JsonComparerExtensions
         => leftDocument.RootElement.CompareWith(rightDocument.RootElement);
 
     public static IEnumerable<JsonDifference<JsonElement>> CompareWith(this JsonElement leftElement, JsonElement rightElement)
-        => leftElement.CompareWith(rightElement, JsonElementDiffValuesSelector.Instance);
+        => leftElement.CompareWith(rightElement, JsonElementDiffValuesSelector.DefaultInstance);
 
     public static IEnumerable<JsonDifference<JsonNode?>> CompareWith(this JsonNode? leftNode, JsonNode? rightNode)
-        => leftNode.CompareWith(rightNode, JsonNodeDiffValuesSelector.Instance);
+        => leftNode.CompareWith(rightNode, JsonNodeDiffValuesSelector.DefaultInstance);
 }
