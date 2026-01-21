@@ -1,4 +1,4 @@
 <Solution>
-  <Project Path="JsonCompare.Tests/JsonCompare.Tests.csproj" Id="d944a238-2e3e-4ae8-8bde-980ba5c2161d" />
-  <Project Path="JsonCompare/JsonCompare.csproj" />
+  <Project Path="JsonDiff.Tests/JsonDiff.Tests.csproj" Id="d944a238-2e3e-4ae8-8bde-980ba5c2161d" />
+  <Project Path="JsonDiff/JsonDiff.csproj" />
 </Solution>
