@@ -182,7 +182,7 @@ public class JsonDiff<TNode>
 
         foreach (var property in leftObjectExtraProperties)
         {
-            string propertyJsonPath = JsonPathCombine(jsonPath, property.Key);
+            string propertyJsonPath = JsonDiffHelpers.JsonPathCombine(jsonPath, property.Key);
             yield return new JsonDiff.Difference<TNode>(propertyJsonPath, JsonDiff.DifferenceSide.Left, property.ArrayElement);
         }
 
@@ -191,7 +191,7 @@ public class JsonDiff<TNode>
 
         foreach (var property in rightObjectExtraProperties)
         {
-            string propertyJsonPath = JsonPathCombine(jsonPath, property.Key);
+            string propertyJsonPath = JsonDiffHelpers.JsonPathCombine(jsonPath, property.Key);
             yield return new JsonDiff.Difference<TNode>(propertyJsonPath, JsonDiff.DifferenceSide.Right, property.ArrayElement);
         }
 
@@ -209,7 +209,7 @@ public class JsonDiff<TNode>
 
         foreach (var joined in leftAndRightJoinedByPropertyName)
         {
-            string propertyJsonPath = JsonPathCombine(jsonPath, joined.Item1);
+            string propertyJsonPath = JsonDiffHelpers.JsonPathCombine(jsonPath, joined.Item1);
 
             var leftPropertyValues = joined.Item2
                 .Select((value, index) => new JsonDiffArrayElementDescriptor<TNode>(index, joined.Item1, value))
@@ -236,16 +236,5 @@ public class JsonDiff<TNode>
                 yield return difference;
             }
         }
-    }
-
-    private static readonly Regex _rxPropertyNameIsClean = new Regex(@"^[a-z_][a-z0-9_]*$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
-
-    private static string JsonPathCombine(string jsonPath, string propertyName)
-    {
-        string sanitizedPropertyName = _rxPropertyNameIsClean.IsMatch(propertyName)
-            ? propertyName
-            : $"\"{propertyName}\"";
-
-        return $"{jsonPath}.{sanitizedPropertyName}";
     }
 }
