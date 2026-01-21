@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
-internal class JsonNodeDiffValuesSelector : IJsonDiffNodeValuesSelector<JsonNode?>
+public sealed class JsonNodeDiffValuesSelector : IJsonDiffNodeValuesSelector<JsonNode?>
 {
     private JsonNodeDiffValuesSelector()
     {

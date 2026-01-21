@@ -3,9 +3,8 @@ namespace NoP77svk.JsonCompare;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using System.Xml.Linq;
 
-internal class JsonElementDiffValuesSelector : IJsonDiffNodeValuesSelector<JsonElement>
+public sealed class JsonElementDiffValuesSelector : IJsonDiffNodeValuesSelector<JsonElement>
 {
     private JsonElementDiffValuesSelector()
     {
@@ -28,9 +27,4 @@ internal class JsonElementDiffValuesSelector : IJsonDiffNodeValuesSelector<JsonE
     public IEnumerable<JsonDiffArrayElementDescriptor<JsonElement>> GetObjectProperties(JsonElement node)
         => node.EnumerateObject()
         .Select((property, index) => new JsonDiffArrayElementDescriptor<JsonElement>(index, property.Name, property.Value));
-
-    IEnumerable<JsonDiffArrayElementDescriptor<JsonElement>> IJsonDiffNodeValuesSelector<JsonElement>.GetArrayValues(JsonElement node)
-    {
-        throw new NotImplementedException();
-    }
 }
