@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 
-public class JsonDiff<TNode>
+public class JsonComparer<TNode>
 {
     private readonly IJsonDiffNodeValuesSelector<TNode> _nodeValuesSelector;
 
@@ -13,7 +13,7 @@ public class JsonDiff<TNode>
 
     public MatchJsonObjectPropertiesBy ObjectPropertiesMatchingStrategy { get; init; } = MatchJsonObjectPropertiesBy.Name;
 
-    public JsonDiff(IJsonDiffNodeValuesSelector<TNode> nodeValuesSelector)
+    public JsonComparer(IJsonDiffNodeValuesSelector<TNode> nodeValuesSelector)
     {
         _nodeValuesSelector = nodeValuesSelector;
     }
