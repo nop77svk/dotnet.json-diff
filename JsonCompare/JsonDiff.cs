@@ -15,28 +15,50 @@ public static class JsonDiff
         Right
     }
 
-#pragma warning disable SA1313
+    #pragma warning disable SA1313
     public record Difference<TNode>(string NodePath, DifferenceSide Side, TNode? NodeValue);
-#pragma warning restore SA1313
+    #pragma warning restore SA1313
 
     public static IEnumerable<Difference<TNode>> CompareWith<TNode>(this TNode? leftDocument, TNode? rightDocument, IJsonDiffNodeValuesSelector<TNode> valueSelector)
-        => EnumerateDifferences(@"$", leftDocument, rightDocument, valueSelector);
+        => new JsonDiff<TNode>().EnumerateDifferences(@"$", leftDocument, rightDocument, valueSelector);
 
     public static IEnumerable<Difference<JsonElement>> CompareWith(this JsonDocument leftDocument, JsonDocument rightDocument)
         => leftDocument.RootElement.CompareWith(rightDocument.RootElement);
 
     public static IEnumerable<Difference<JsonElement>> CompareWith(this JsonElement leftElement, JsonElement rightElement)
-        => EnumerateDifferences(@"$", leftElement, rightElement, JsonElementDiffValuesSelector.Instance);
+        => leftElement.CompareWith(rightElement, JsonElementDiffValuesSelector.Instance);
 
     public static IEnumerable<Difference<JsonNode?>> CompareWith(this JsonNode? leftNode, JsonNode? rightNode)
-        => EnumerateDifferences(@"$", leftNode, rightNode, JsonNodeDiffValuesSelector.Instance);
+        => leftNode.CompareWith(rightNode, JsonNodeDiffValuesSelector.Instance);
+}
 
-    private static IEnumerable<Difference<TNode>> EnumerateDifferences<TNode>(string jsonPath, TNode? leftNode, TNode? rightNode, IJsonDiffNodeValuesSelector<TNode> valueSelector)
+public class JsonDiff<TNode>
+{
+    public enum MatchArrayElementsBy
+    {
+        Position,
+        Key
+    }
+
+    public enum MatchObjectPropertiesBy
+    {
+        Name,
+        Position
+    }
+
+    public MatchArrayElementsBy ArrayElementMatchingStrategy { get; init; } = MatchArrayElementsBy.Position;
+    public MatchObjectPropertiesBy ObjectPropertiesMatchingStrategy { get; init; } = MatchObjectPropertiesBy.Name;
+
+    public JsonDiff()
+    {
+    }
+
+    public IEnumerable<JsonDiff.Difference<TNode>> EnumerateDifferences(string jsonPath, TNode? leftNode, TNode? rightNode, IJsonDiffNodeValuesSelector<TNode> valueSelector)
     {
         JsonValueKind leftValueKind = valueSelector.GetValueKind(leftNode);
         JsonValueKind rightValueKind = valueSelector.GetValueKind(rightNode);
 
-        IEnumerable<Difference<TNode>> result;
+        IEnumerable<JsonDiff.Difference<TNode>> result;
 
         if (leftValueKind is JsonValueKind.True or JsonValueKind.False
             && rightValueKind is JsonValueKind.True or JsonValueKind.False)
@@ -55,7 +77,7 @@ public static class JsonDiff
                 JsonValueKind.Number => EnumerateNumberValueDifferences(jsonPath, leftNode, rightNode, valueSelector),
                 JsonValueKind.Array => EnumerateArrayElementsDifferences(jsonPath, valueSelector.GetArrayValues(leftNode), valueSelector.GetArrayValues(rightNode), valueSelector),
                 JsonValueKind.Object => EnumerateObjectPropertiesDifferences(jsonPath, valueSelector.GetObjectProperties(leftNode), valueSelector.GetObjectProperties(rightNode), valueSelector),
-                JsonValueKind.Null => Enumerable.Empty<Difference<TNode>>(),
+                JsonValueKind.Null => Enumerable.Empty<JsonDiff.Difference<TNode>>(),
                 _ => throw new NotImplementedException($"Comparison for JSON value kind '{leftValueKind}' is not (yet) implemented."),
             };
         }
@@ -63,46 +85,46 @@ public static class JsonDiff
         return result;
     }
 
-    private static IEnumerable<Difference<TNode>> EnumerateValueKindDifferences<TNode>(string jsonPath, TNode? leftNode, TNode? rightNode)
+    private static IEnumerable<JsonDiff.Difference<TNode>> EnumerateValueKindDifferences(string jsonPath, TNode? leftNode, TNode? rightNode)
     {
-        yield return new Difference<TNode>(jsonPath, DifferenceSide.Left, leftNode);
-        yield return new Difference<TNode>(jsonPath, DifferenceSide.Right, rightNode);
+        yield return new JsonDiff.Difference<TNode>(jsonPath, JsonDiff.DifferenceSide.Left, leftNode);
+        yield return new JsonDiff.Difference<TNode>(jsonPath, JsonDiff.DifferenceSide.Right, rightNode);
     }
 
-    private static IEnumerable<Difference<TNode>> EnumerateNumberValueDifferences<TNode>(string jsonPath, TNode? leftNode, TNode? rightNode, IJsonDiffNodeValuesSelector<TNode> valueSelector)
+    private static IEnumerable<JsonDiff.Difference<TNode>> EnumerateNumberValueDifferences(string jsonPath, TNode? leftNode, TNode? rightNode, IJsonDiffNodeValuesSelector<TNode> valueSelector)
     {
         decimal valueLeft = valueSelector.GetNumberValue(leftNode);
         decimal valueRight = valueSelector.GetNumberValue(rightNode);
 
         if (valueLeft != valueRight)
         {
-            yield return new Difference<TNode>(jsonPath, DifferenceSide.Left, leftNode);
-            yield return new Difference<TNode>(jsonPath, DifferenceSide.Right, rightNode);
+            yield return new JsonDiff.Difference<TNode>(jsonPath, JsonDiff.DifferenceSide.Left, leftNode);
+            yield return new JsonDiff.Difference<TNode>(jsonPath, JsonDiff.DifferenceSide.Right, rightNode);
         }
     }
 
-    private static IEnumerable<Difference<TNode>> EnumerateStringValueDifferences<TNode>(string jsonPath, TNode? leftNode, TNode? rightNode, IJsonDiffNodeValuesSelector<TNode> valueSelector)
+    private static IEnumerable<JsonDiff.Difference<TNode>> EnumerateStringValueDifferences(string jsonPath, TNode? leftNode, TNode? rightNode, IJsonDiffNodeValuesSelector<TNode> valueSelector)
     {
         if (!valueSelector.GetStringValue(leftNode).Equals(valueSelector.GetStringValue(rightNode)))
         {
-            yield return new Difference<TNode>(jsonPath, DifferenceSide.Left, leftNode);
-            yield return new Difference<TNode>(jsonPath, DifferenceSide.Right, rightNode);
+            yield return new JsonDiff.Difference<TNode>(jsonPath, JsonDiff.DifferenceSide.Left, leftNode);
+            yield return new JsonDiff.Difference<TNode>(jsonPath, JsonDiff.DifferenceSide.Right, rightNode);
         }
     }
 
-    private static IEnumerable<Difference<TNode>> EnumerateBooleanNodeDifferences<TNode>(string jsonPath, TNode? leftNode, TNode? rightNode, JsonValueKind leftValueKind, JsonValueKind rightValueKind)
+    private static IEnumerable<JsonDiff.Difference<TNode>> EnumerateBooleanNodeDifferences(string jsonPath, TNode? leftNode, TNode? rightNode, JsonValueKind leftValueKind, JsonValueKind rightValueKind)
     {
         bool valueLeft = leftValueKind is JsonValueKind.True;
         bool valueRight = rightValueKind is JsonValueKind.True;
 
         if (valueLeft != valueRight)
         {
-            yield return new Difference<TNode>(jsonPath, DifferenceSide.Left, leftNode);
-            yield return new Difference<TNode>(jsonPath, DifferenceSide.Right, rightNode);
+            yield return new JsonDiff.Difference<TNode>(jsonPath, JsonDiff.DifferenceSide.Left, leftNode);
+            yield return new JsonDiff.Difference<TNode>(jsonPath, JsonDiff.DifferenceSide.Right, rightNode);
         }
     }
 
-    private static IEnumerable<Difference<TNode>> EnumerateArrayElementsDifferences<TNode>(string jsonPath, IEnumerable<JsonDiffArrayElementDescriptor<TNode>> leftArray, IEnumerable<JsonDiffArrayElementDescriptor<TNode>> rightArray, IJsonDiffNodeValuesSelector<TNode> valueSelector)
+    private IEnumerable<JsonDiff.Difference<TNode>> EnumerateArrayElementsDifferences(string jsonPath, IEnumerable<JsonDiffArrayElementDescriptor<TNode>> leftArray, IEnumerable<JsonDiffArrayElementDescriptor<TNode>> rightArray, IJsonDiffNodeValuesSelector<TNode> valueSelector)
     {
         using IEnumerator<JsonDiffArrayElementDescriptor<TNode>> leftArrayEnumerator = leftArray.GetEnumerator();
         using IEnumerator<JsonDiffArrayElementDescriptor<TNode>> rightArrayEnumerator = rightArray.GetEnumerator();
@@ -118,7 +140,7 @@ public static class JsonDiff
 
             if (leftArrayHasItems && rightArrayHasItems)
             {
-                IEnumerable<Difference<TNode>> differencesOnThisArrayItem = EnumerateDifferences(arrayItemJsonPath, leftArrayEnumerator.Current.ArrayElement, rightArrayEnumerator.Current.ArrayElement, valueSelector);
+                IEnumerable<JsonDiff.Difference<TNode>> differencesOnThisArrayItem = EnumerateDifferences(arrayItemJsonPath, leftArrayEnumerator.Current.ArrayElement, rightArrayEnumerator.Current.ArrayElement, valueSelector);
                 foreach (var difference in differencesOnThisArrayItem)
                 {
                     yield return difference;
@@ -126,11 +148,11 @@ public static class JsonDiff
             }
             else if (leftArrayHasItems)
             {
-                yield return new Difference<TNode>(arrayItemJsonPath, DifferenceSide.Left, leftArrayEnumerator.Current.ArrayElement);
+                yield return new JsonDiff.Difference<TNode>(arrayItemJsonPath, JsonDiff.DifferenceSide.Left, leftArrayEnumerator.Current.ArrayElement);
             }
             else if (rightArrayHasItems)
             {
-                yield return new Difference<TNode>(arrayItemJsonPath, DifferenceSide.Right, rightArrayEnumerator.Current.ArrayElement);
+                yield return new JsonDiff.Difference<TNode>(arrayItemJsonPath, JsonDiff.DifferenceSide.Right, rightArrayEnumerator.Current.ArrayElement);
             }
             else
             {
@@ -141,7 +163,7 @@ public static class JsonDiff
         }
     }
 
-    private static IEnumerable<Difference<TNode>> EnumerateObjectPropertiesDifferences<TNode>(string jsonPath, IEnumerable<JsonDiffArrayElementDescriptor<TNode>> leftObjectEnumerable, IEnumerable<JsonDiffArrayElementDescriptor<TNode>> rightObjectEnumerable, IJsonDiffNodeValuesSelector<TNode> valueSelector)
+    private IEnumerable<JsonDiff.Difference<TNode>> EnumerateObjectPropertiesDifferences(string jsonPath, IEnumerable<JsonDiffArrayElementDescriptor<TNode>> leftObjectEnumerable, IEnumerable<JsonDiffArrayElementDescriptor<TNode>> rightObjectEnumerable, IJsonDiffNodeValuesSelector<TNode> valueSelector)
     {
         var leftObjectGroupedByProperty = leftObjectEnumerable
             .ToLookup(
@@ -161,7 +183,7 @@ public static class JsonDiff
         foreach (var property in leftObjectExtraProperties)
         {
             string propertyJsonPath = JsonPathCombine(jsonPath, property.Key);
-            yield return new Difference<TNode>(propertyJsonPath, DifferenceSide.Left, property.ArrayElement);
+            yield return new JsonDiff.Difference<TNode>(propertyJsonPath, JsonDiff.DifferenceSide.Left, property.ArrayElement);
         }
 
         var rightObjectExtraProperties = rightObjectEnumerable
@@ -170,7 +192,7 @@ public static class JsonDiff
         foreach (var property in rightObjectExtraProperties)
         {
             string propertyJsonPath = JsonPathCombine(jsonPath, property.Key);
-            yield return new Difference<TNode>(propertyJsonPath, DifferenceSide.Right, property.ArrayElement);
+            yield return new JsonDiff.Difference<TNode>(propertyJsonPath, JsonDiff.DifferenceSide.Right, property.ArrayElement);
         }
 
         var leftAndRightJoinedByPropertyName = leftObjectGroupedByProperty
@@ -199,7 +221,7 @@ public static class JsonDiff
                 .OrderBy(kvp => kvp.ArrayElement?.GetHashCode() ?? 0)
                 .ToList();
 
-            IEnumerable<Difference<TNode>> differences;
+            IEnumerable<JsonDiff.Difference<TNode>> differences;
             if (leftPropertyValues.Count > 1 || rightPropertyValues.Count > 1)
             {
                 differences = EnumerateObjectPropertiesDifferences(propertyJsonPath, leftPropertyValues, rightPropertyValues, valueSelector);
