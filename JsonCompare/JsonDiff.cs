@@ -16,10 +16,10 @@ public static class JsonDiff
     }
 
 #pragma warning disable SA1313
-    public record Difference<TNode>(string NodePath, DifferenceSide Side, TNode NodeValue);
+    public record Difference<TNode>(string NodePath, DifferenceSide Side, TNode? NodeValue);
 #pragma warning restore SA1313
 
-    public static IEnumerable<Difference<TNode>> CompareWith<TNode>(this TNode leftDocument, TNode rightDocument, IJsonDiffNodeValuesSelector<TNode> valueSelector)
+    public static IEnumerable<Difference<TNode>> CompareWith<TNode>(this TNode? leftDocument, TNode? rightDocument, IJsonDiffNodeValuesSelector<TNode> valueSelector)
         => EnumerateDifferences(@"$", leftDocument, rightDocument, valueSelector);
 
     public static IEnumerable<Difference<JsonElement>> CompareWith(this JsonDocument leftDocument, JsonDocument rightDocument)
@@ -28,10 +28,10 @@ public static class JsonDiff
     public static IEnumerable<Difference<JsonElement>> CompareWith(this JsonElement leftElement, JsonElement rightElement)
         => EnumerateDifferences(@"$", leftElement, rightElement, JsonElementDiffValuesSelector.Instance);
 
-    public static IEnumerable<Difference<JsonNode?>> CompareWith(this JsonNode leftNode, JsonNode rightNode)
+    public static IEnumerable<Difference<JsonNode?>> CompareWith(this JsonNode? leftNode, JsonNode? rightNode)
         => EnumerateDifferences(@"$", leftNode, rightNode, JsonNodeDiffValuesSelector.Instance);
 
-    private static IEnumerable<Difference<TNode>> EnumerateDifferences<TNode>(string jsonPath, TNode leftNode, TNode rightNode, IJsonDiffNodeValuesSelector<TNode> valueSelector)
+    private static IEnumerable<Difference<TNode>> EnumerateDifferences<TNode>(string jsonPath, TNode? leftNode, TNode? rightNode, IJsonDiffNodeValuesSelector<TNode> valueSelector)
     {
         JsonValueKind leftValueKind = valueSelector.GetValueKind(leftNode);
         JsonValueKind rightValueKind = valueSelector.GetValueKind(rightNode);
@@ -63,13 +63,13 @@ public static class JsonDiff
         return result;
     }
 
-    private static IEnumerable<Difference<TNode>> EnumerateValueKindDifferences<TNode>(string jsonPath, TNode leftNode, TNode rightNode)
+    private static IEnumerable<Difference<TNode>> EnumerateValueKindDifferences<TNode>(string jsonPath, TNode? leftNode, TNode? rightNode)
     {
         yield return new Difference<TNode>(jsonPath, DifferenceSide.Left, leftNode);
         yield return new Difference<TNode>(jsonPath, DifferenceSide.Right, rightNode);
     }
 
-    private static IEnumerable<Difference<TNode>> EnumerateNumberValueDifferences<TNode>(string jsonPath, TNode leftNode, TNode rightNode, IJsonDiffNodeValuesSelector<TNode> valueSelector)
+    private static IEnumerable<Difference<TNode>> EnumerateNumberValueDifferences<TNode>(string jsonPath, TNode? leftNode, TNode? rightNode, IJsonDiffNodeValuesSelector<TNode> valueSelector)
     {
         decimal valueLeft = valueSelector.GetNumberValue(leftNode);
         decimal valueRight = valueSelector.GetNumberValue(rightNode);
@@ -81,7 +81,7 @@ public static class JsonDiff
         }
     }
 
-    private static IEnumerable<Difference<TNode>> EnumerateStringValueDifferences<TNode>(string jsonPath, TNode leftNode, TNode rightNode, IJsonDiffNodeValuesSelector<TNode> valueSelector)
+    private static IEnumerable<Difference<TNode>> EnumerateStringValueDifferences<TNode>(string jsonPath, TNode? leftNode, TNode? rightNode, IJsonDiffNodeValuesSelector<TNode> valueSelector)
     {
         if (!valueSelector.GetStringValue(leftNode).Equals(valueSelector.GetStringValue(rightNode)))
         {
@@ -90,7 +90,7 @@ public static class JsonDiff
         }
     }
 
-    private static IEnumerable<Difference<TNode>> EnumerateBooleanNodeDifferences<TNode>(string jsonPath, TNode leftNode, TNode rightNode, JsonValueKind leftValueKind, JsonValueKind rightValueKind)
+    private static IEnumerable<Difference<TNode>> EnumerateBooleanNodeDifferences<TNode>(string jsonPath, TNode? leftNode, TNode? rightNode, JsonValueKind leftValueKind, JsonValueKind rightValueKind)
     {
         bool valueLeft = leftValueKind is JsonValueKind.True;
         bool valueRight = rightValueKind is JsonValueKind.True;
@@ -102,10 +102,10 @@ public static class JsonDiff
         }
     }
 
-    private static IEnumerable<Difference<TNode>> EnumerateArrayElementsDifferences<TNode>(string jsonPath, IEnumerable<KeyValuePair<int, TNode>> leftArray, IEnumerable<KeyValuePair<int, TNode>> rightArray, IJsonDiffNodeValuesSelector<TNode> valueSelector)
+    private static IEnumerable<Difference<TNode>> EnumerateArrayElementsDifferences<TNode>(string jsonPath, IEnumerable<KeyValuePair<int, TNode?>> leftArray, IEnumerable<KeyValuePair<int, TNode?>> rightArray, IJsonDiffNodeValuesSelector<TNode> valueSelector)
     {
-        using IEnumerator<KeyValuePair<int, TNode>> leftArrayEnumerator = leftArray.GetEnumerator();
-        using IEnumerator<KeyValuePair<int, TNode>> rightArrayEnumerator = rightArray.GetEnumerator();
+        using IEnumerator<KeyValuePair<int, TNode?>> leftArrayEnumerator = leftArray.GetEnumerator();
+        using IEnumerator<KeyValuePair<int, TNode?>> rightArrayEnumerator = rightArray.GetEnumerator();
 
         int arrayItemIndex = 0;
 
@@ -141,7 +141,7 @@ public static class JsonDiff
         }
     }
 
-    private static IEnumerable<Difference<TNode>> EnumerateObjectPropertiesDifferences<TNode>(string jsonPath, IEnumerable<KeyValuePair<string, TNode>> leftObjectEnumerable, IEnumerable<KeyValuePair<string, TNode>> rightObjectEnumerable, IJsonDiffNodeValuesSelector<TNode> valueSelector)
+    private static IEnumerable<Difference<TNode>> EnumerateObjectPropertiesDifferences<TNode>(string jsonPath, IEnumerable<KeyValuePair<string, TNode?>> leftObjectEnumerable, IEnumerable<KeyValuePair<string, TNode?>> rightObjectEnumerable, IJsonDiffNodeValuesSelector<TNode> valueSelector)
     {
         var leftObjectGroupedByProperty = leftObjectEnumerable
             .ToLookup(
@@ -178,7 +178,7 @@ public static class JsonDiff
                 inner: rightObjectGroupedByProperty,
                 outerKeySelector: left => left.Key,
                 innerKeySelector: right => right.Key,
-                resultSelector: (left, right) => new ValueTuple<string, IEnumerable<TNode>, IEnumerable<TNode>>(
+                resultSelector: (left, right) => new ValueTuple<string, IEnumerable<TNode?>, IEnumerable<TNode?>>(
                     left.Key,
                     left,
                     right
@@ -190,12 +190,12 @@ public static class JsonDiff
             string propertyJsonPath = JsonPathCombine(jsonPath, joined.Item1);
 
             var leftPropertyValues = joined.Item2
-                .Select(value => new KeyValuePair<string, TNode>(joined.Item1, value))
+                .Select(value => new KeyValuePair<string, TNode?>(joined.Item1, value))
                 .OrderBy(kvp => kvp.Value?.GetHashCode() ?? 0)
                 .ToList();
 
             var rightPropertyValues = joined.Item3
-                .Select(value => new KeyValuePair<string, TNode>(joined.Item1, value))
+                .Select(value => new KeyValuePair<string, TNode?>(joined.Item1, value))
                 .OrderBy(kvp => kvp.Value?.GetHashCode() ?? 0)
                 .ToList();
 
