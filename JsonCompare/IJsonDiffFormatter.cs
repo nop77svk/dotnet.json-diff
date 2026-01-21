@@ -30,10 +30,8 @@ public class SimpleJsonDiffFormatter<TNode>
     }
 }
 
-public static class JsonDiffExtensions
+public static class JsonDiffFormatterExtensions
 {
     public static IEnumerable<string> AsFormattedStrings<TNode>(this IEnumerable<JsonDiff.Difference<TNode>> differences, IJsonDiffFormatter<TNode> options)
-    {
-        return differences.Select(options.DiffMessageFormatter);
-    }
+        => differences.Select(options.DiffMessageFormatter);
 }

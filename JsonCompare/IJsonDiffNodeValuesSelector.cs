@@ -10,9 +10,14 @@ public record JsonDiffArrayElementDescriptor<TNode>(int Index, string Key, TNode
 public interface IJsonDiffNodeValuesSelector<TNode>
 {
     JsonValueKind GetValueKind(TNode? node);
+
     string GetStringValue(TNode? node);
+
     decimal GetNumberValue(TNode? node);
+
     IEnumerable<JsonDiffArrayElementDescriptor<TNode>> GetArrayValues(TNode? node);
+
     string GetArrayElementDescriptor(int index, TNode? node);
+
     IEnumerable<JsonDiffArrayElementDescriptor<TNode>> GetObjectProperties(TNode? node);
 }

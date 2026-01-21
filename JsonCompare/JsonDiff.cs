@@ -14,9 +14,9 @@ public static class JsonDiff
         Right
     }
 
-    #pragma warning disable SA1313
+#pragma warning disable SA1313
     public record Difference<TNode>(string NodePath, DifferenceSide Side, TNode? NodeValue);
-    #pragma warning restore SA1313
+#pragma warning restore SA1313
 
     public static IEnumerable<Difference<TNode>> CompareWith<TNode>(this TNode? leftDocument, TNode? rightDocument, IJsonDiffNodeValuesSelector<TNode> nodeValuesSelector)
         => new JsonDiff<TNode>(nodeValuesSelector).EnumerateDifferences(@"$", leftDocument, rightDocument);
@@ -86,6 +86,18 @@ public class JsonDiff<TNode>
         return result;
     }
 
+    private static IEnumerable<JsonDiff.Difference<TNode>> EnumerateBooleanNodeDifferences(string jsonPath, TNode? leftNode, TNode? rightNode, JsonValueKind leftValueKind, JsonValueKind rightValueKind)
+    {
+        bool valueLeft = leftValueKind is JsonValueKind.True;
+        bool valueRight = rightValueKind is JsonValueKind.True;
+
+        if (valueLeft != valueRight)
+        {
+            yield return new JsonDiff.Difference<TNode>(jsonPath, JsonDiff.DifferenceSide.Left, leftNode);
+            yield return new JsonDiff.Difference<TNode>(jsonPath, JsonDiff.DifferenceSide.Right, rightNode);
+        }
+    }
+
     private static IEnumerable<JsonDiff.Difference<TNode>> EnumerateValueKindDifferences(string jsonPath, TNode? leftNode, TNode? rightNode)
     {
         yield return new JsonDiff.Difference<TNode>(jsonPath, JsonDiff.DifferenceSide.Left, leftNode);
@@ -107,18 +119,6 @@ public class JsonDiff<TNode>
     private IEnumerable<JsonDiff.Difference<TNode>> EnumerateStringValueDifferences(string jsonPath, TNode? leftNode, TNode? rightNode)
     {
         if (!NodeValuesSelector.GetStringValue(leftNode).Equals(NodeValuesSelector.GetStringValue(rightNode)))
-        {
-            yield return new JsonDiff.Difference<TNode>(jsonPath, JsonDiff.DifferenceSide.Left, leftNode);
-            yield return new JsonDiff.Difference<TNode>(jsonPath, JsonDiff.DifferenceSide.Right, rightNode);
-        }
-    }
-
-    private static IEnumerable<JsonDiff.Difference<TNode>> EnumerateBooleanNodeDifferences(string jsonPath, TNode? leftNode, TNode? rightNode, JsonValueKind leftValueKind, JsonValueKind rightValueKind)
-    {
-        bool valueLeft = leftValueKind is JsonValueKind.True;
-        bool valueRight = rightValueKind is JsonValueKind.True;
-
-        if (valueLeft != valueRight)
         {
             yield return new JsonDiff.Difference<TNode>(jsonPath, JsonDiff.DifferenceSide.Left, leftNode);
             yield return new JsonDiff.Difference<TNode>(jsonPath, JsonDiff.DifferenceSide.Right, rightNode);
