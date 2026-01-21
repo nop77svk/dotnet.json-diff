@@ -3,6 +3,7 @@ namespace NoP77svk.JsonCompare;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using System.Xml.Linq;
 
 internal class JsonElementDiffValuesSelector : IJsonDiffNodeValuesSelector<JsonElement>
 {
@@ -18,11 +19,18 @@ internal class JsonElementDiffValuesSelector : IJsonDiffNodeValuesSelector<JsonE
 
     public decimal GetNumberValue(JsonElement node) => node.GetDecimal();
 
-    public IEnumerable<KeyValuePair<int, JsonElement>> GetArrayValues(JsonElement node)
+    public IEnumerable<JsonDiffArrayElementDescriptor<JsonElement>> GetArrayValues(JsonElement node)
         => node.EnumerateArray()
-        .Select((element, index) => new KeyValuePair<int, JsonElement>(index, element));
+        .Select((element, index) => new JsonDiffArrayElementDescriptor<JsonElement>(index, GetArrayElementDescriptor(index, node), element));
 
-    public IEnumerable<KeyValuePair<string, JsonElement>> GetObjectProperties(JsonElement node)
+    public string GetArrayElementDescriptor(int index, JsonElement node) => index.ToString();
+
+    public IEnumerable<JsonDiffArrayElementDescriptor<JsonElement>> GetObjectProperties(JsonElement node)
         => node.EnumerateObject()
-        .Select(property => new KeyValuePair<string, JsonElement>(property.Name, property.Value));
+        .Select((property, index) => new JsonDiffArrayElementDescriptor<JsonElement>(index, property.Name, property.Value));
+
+    IEnumerable<JsonDiffArrayElementDescriptor<JsonElement>> IJsonDiffNodeValuesSelector<JsonElement>.GetArrayValues(JsonElement node)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -19,13 +19,15 @@ internal class JsonNodeDiffValuesSelector : IJsonDiffNodeValuesSelector<JsonNode
 
     public decimal GetNumberValue(JsonNode? node) => node?.GetValue<decimal>() ?? 0m;
 
-    public IEnumerable<KeyValuePair<int, JsonNode?>> GetArrayValues(JsonNode? node)
+    public IEnumerable<JsonDiffArrayElementDescriptor<JsonNode?>> GetArrayValues(JsonNode? node)
         => node?.AsArray()
-        .Select((element, index) => new KeyValuePair<int, JsonNode?>(index, element))
-        ?? Array.Empty<KeyValuePair<int, JsonNode?>>();
+        .Select((element, index) => new JsonDiffArrayElementDescriptor<JsonNode?>(index, GetArrayElementDescriptor(index, element), element))
+        ?? Enumerable.Empty<JsonDiffArrayElementDescriptor<JsonNode?>>();
 
-    public IEnumerable<KeyValuePair<string, JsonNode?>> GetObjectProperties(JsonNode? node)
+    public IEnumerable<JsonDiffArrayElementDescriptor<JsonNode?>> GetObjectProperties(JsonNode? node)
         => node?.AsObject()
-        .Select(property => new KeyValuePair<string, JsonNode?>(property.Key, property.Value))
-        ?? Array.Empty<KeyValuePair<string, JsonNode?>>();
+        .Select((property, index) => new JsonDiffArrayElementDescriptor<JsonNode?>(index, property.Key, property.Value))
+        ?? Enumerable.Empty<JsonDiffArrayElementDescriptor<JsonNode?>>();
+
+    public string GetArrayElementDescriptor(int index, JsonNode? node) => index.ToString();
 }

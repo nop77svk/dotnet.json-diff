@@ -1,8 +1,7 @@
-﻿namespace NoP77svk.JsonCompare;
+namespace NoP77svk.JsonCompare;
 
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
 
 public interface IJsonDiffFormatter<TNode>
 {
