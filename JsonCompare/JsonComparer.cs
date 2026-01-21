@@ -1,4 +1,4 @@
-namespace NoP77svk.JsonCompare;
+namespace NoP77svk.JsonDiff;
 
 using System;
 using System.Collections.Generic;

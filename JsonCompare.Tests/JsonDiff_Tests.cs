@@ -3,7 +3,7 @@ namespace JsonCompare.Tests;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
-using NoP77svk.JsonCompare;
+using NoP77svk.JsonDiff;
 
 [TestFixture]
 public class JsonDiff_Tests
