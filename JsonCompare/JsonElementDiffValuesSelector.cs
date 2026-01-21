@@ -6,6 +6,8 @@ using System.Text.Json;
 
 public sealed class JsonElementDiffValuesSelector : IJsonDiffNodeValuesSelector<JsonElement>
 {
+    public Func<int, JsonElement, string>? ArrayElementDescriptorSelector { get; init; } = null;
+
     private JsonElementDiffValuesSelector()
     {
     }
@@ -22,7 +24,9 @@ public sealed class JsonElementDiffValuesSelector : IJsonDiffNodeValuesSelector<
         => node.EnumerateArray()
         .Select((element, index) => new JsonDiffArrayElementDescriptor<JsonElement>(index, GetArrayElementDescriptor(index, node), element));
 
-    public string GetArrayElementDescriptor(int index, JsonElement node) => index.ToString();
+    public string GetArrayElementDescriptor(int index, JsonElement node)
+        => ArrayElementDescriptorSelector?.Invoke(index, node)
+        ?? index.ToString();
 
     public IEnumerable<JsonDiffArrayElementDescriptor<JsonElement>> GetObjectProperties(JsonElement node)
         => node.EnumerateObject()
