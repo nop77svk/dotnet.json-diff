@@ -3,9 +3,9 @@
     <PropertyGroup>
         <OutputType>Library</OutputType>
 
-        <RootNamespace>NoP77svk.JsonCompare</RootNamespace>
-        <AssemblyName>NoP77svk.JsonCompare</AssemblyName>
-        <PackageId>NoP77svk.JsonCompare</PackageId>
+        <RootNamespace>NoP77svk.JsonDiff</RootNamespace>
+        <AssemblyName>NoP77svk.JsonDiff</AssemblyName>
+        <PackageId>NoP77svk.JsonDiff</PackageId>
         <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     </PropertyGroup>
 

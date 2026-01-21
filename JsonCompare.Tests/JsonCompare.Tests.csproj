@@ -1,11 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net10.0</TargetFramework>
-		<LangVersion>latest</LangVersion>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
+		<OutputType>Library</OutputType>
 		<IsPackable>false</IsPackable>
+
+		<RootNamespace>NoP77svk.JsonDiff.Tests</RootNamespace>
+		<AssemblyName>NoP77svk.JsonDiff.Tests</AssemblyName>
+		<PackageId>NoP77svk.JsonDiff.Tests</PackageId>
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 	</PropertyGroup>
 
 	<ItemGroup>
