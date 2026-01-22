@@ -193,11 +193,7 @@ public class JsonComparer<TNode>
                 inner: rightElementsGroupedByKey,
                 outerKeySelector: left => left.Key,
                 innerKeySelector: right => right.Key,
-                resultSelector: (left, right) => new ValueTuple<string, IEnumerable<TNode?>, IEnumerable<TNode?>>(
-                    left.Key,
-                    left.ToList(),
-                    right.ToList()
-                )
+                resultSelector: (left, right) => new ValueTuple<string, IEnumerable<TNode?>, IEnumerable<TNode?>>(left.Key, left, right)
             );
 
         foreach (var joined in leftAndRightJoinedByKey)
@@ -206,12 +202,12 @@ public class JsonComparer<TNode>
 
             var leftElementValues = joined.Item2
                 .Select((value, index) => new JsonDiffArrayElementDescriptor<TNode>(index, joined.Item1, value))
-                .OrderBy(kvp => kvp.ArrayElement?.GetHashCode() ?? 0)
+                .OrderBy(kvp => kvp.Key)
                 .ToList();
 
             var rightElementValues = joined.Item3
                 .Select((value, index) => new JsonDiffArrayElementDescriptor<TNode>(index, joined.Item1, value))
-                .OrderBy(kvp => kvp.ArrayElement?.GetHashCode() ?? 0)
+                .OrderBy(kvp => kvp.Key)
                 .ToList();
 
             IEnumerable<JsonDifference<TNode>> differences = leftElementValues.Count > 1 || rightElementValues.Count > 1
