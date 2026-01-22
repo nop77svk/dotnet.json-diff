@@ -1,0 +1,9 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "generated": "2026-01-21",
+    "type": "employee_database"
+  },
+  "techs": ["C#", "Python", "JavaScript", "Docker", "Kubernetes"]
+}
+
