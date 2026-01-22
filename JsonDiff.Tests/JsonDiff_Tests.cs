@@ -84,7 +84,7 @@ public class JsonDiff_Tests
 
     [Test]
     [TestCaseSource(nameof(BasicTestCases))]
-    public async Task JsonComparerInstance_JsonElement_SelfComparison_ReturnsEmpty(string testCaseFileName)
+    public async Task JsonElement_SelfComparison_ReturnsEmpty(string testCaseFileName)
     {
         // arrange
         await TestContext.Out.WriteLineAsync($"Test case file: {testCaseFileName}");
@@ -102,7 +102,7 @@ public class JsonDiff_Tests
 
     [Test]
     [TestCaseSource(nameof(BasicTestCases))]
-    public async Task JsonComparerInstance_JsonNode_SelfComparison_ReturnsEmpty(string testCaseFileName)
+    public async Task JsonNode_SelfComparison_ReturnsEmpty(string testCaseFileName)
     {
         // arrange
         await TestContext.Out.WriteLineAsync($"Test case file: {testCaseFileName}");
@@ -120,7 +120,7 @@ public class JsonDiff_Tests
 
     [Test]
     [TestCaseSource(nameof(BasicTestCases))]
-    public async Task JsonComparerInstance_JsonElement_SelfComparisonByPosition_ReturnsEmpty(string testCaseFileName)
+    public async Task JsonElement_SelfComparisonByPosition_ReturnsEmpty(string testCaseFileName)
     {
         // arrange
         await TestContext.Out.WriteLineAsync($"Test case file: {testCaseFileName}");
@@ -142,7 +142,7 @@ public class JsonDiff_Tests
 
     [Test]
     [TestCaseSource(nameof(BasicTestCases))]
-    public async Task JsonComparerInstance_JsonNode_SelfComparisonByPosition_ReturnsEmpty(string testCaseFileName)
+    public async Task JsonNode_SelfComparisonByPosition_ReturnsEmpty(string testCaseFileName)
     {
         // arrange
         await TestContext.Out.WriteLineAsync($"Test case file: {testCaseFileName}");
@@ -164,7 +164,7 @@ public class JsonDiff_Tests
 
     [Test]
     [TestCaseSource(nameof(BasicTestCases))]
-    public async Task JsonComparerInstance_JsonElement_SelfComparisonByKeyAndPosition_ReturnsEmpty(string testCaseFileName)
+    public async Task JsonElement_SelfComparisonByKeyAndPosition_ReturnsEmpty(string testCaseFileName)
     {
         // arrange
         await TestContext.Out.WriteLineAsync($"Test case file: {testCaseFileName}");
@@ -186,7 +186,7 @@ public class JsonDiff_Tests
 
     [Test]
     [TestCaseSource(nameof(BasicTestCases))]
-    public async Task JsonComparerInstance_JsonNode_SelfComparisonByKeyAndPosition_ReturnsEmpty(string testCaseFileName)
+    public async Task JsonNode_SelfComparisonByKeyAndPosition_ReturnsEmpty(string testCaseFileName)
     {
         // arrange
         await TestContext.Out.WriteLineAsync($"Test case file: {testCaseFileName}");
@@ -208,7 +208,7 @@ public class JsonDiff_Tests
 
     [Test]
     [TestCaseSource(nameof(BasicTestCases))]
-    public async Task JsonComparerInstance_JsonElement_SelfComparisonByPositionAndName_ReturnsEmpty(string testCaseFileName)
+    public async Task JsonElement_SelfComparisonByPositionAndName_ReturnsEmpty(string testCaseFileName)
     {
         // arrange
         await TestContext.Out.WriteLineAsync($"Test case file: {testCaseFileName}");
@@ -230,7 +230,7 @@ public class JsonDiff_Tests
 
     [Test]
     [TestCaseSource(nameof(BasicTestCases))]
-    public async Task JsonComparerInstance_JsonNode_SelfComparisonByPositionAndName_ReturnsEmpty(string testCaseFileName)
+    public async Task JsonNode_SelfComparisonByPositionAndName_ReturnsEmpty(string testCaseFileName)
     {
         // arrange
         await TestContext.Out.WriteLineAsync($"Test case file: {testCaseFileName}");
@@ -252,7 +252,7 @@ public class JsonDiff_Tests
 
     [Test]
     [TestCaseSource(nameof(BasicTestCases))]
-    public async Task JsonComparerInstance_JsonElement_SelfComparisonByKeyAndName_ReturnsEmpty(string testCaseFileName)
+    public async Task JsonElement_SelfComparisonByKeyAndName_ReturnsEmpty(string testCaseFileName)
     {
         // arrange
         await TestContext.Out.WriteLineAsync($"Test case file: {testCaseFileName}");
@@ -274,7 +274,7 @@ public class JsonDiff_Tests
 
     [Test]
     [TestCaseSource(nameof(BasicTestCases))]
-    public async Task JsonComparerInstance_JsonNode_SelfComparisonByKeyAndName_ReturnsEmpty(string testCaseFileName)
+    public async Task JsonNode_SelfComparisonByKeyAndName_ReturnsEmpty(string testCaseFileName)
     {
         // arrange
         await TestContext.Out.WriteLineAsync($"Test case file: {testCaseFileName}");
