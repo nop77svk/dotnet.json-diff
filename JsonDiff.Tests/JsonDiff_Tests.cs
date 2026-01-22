@@ -1,14 +1,28 @@
 namespace NoP77svk.JsonDiff.Tests;
 
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using System.Text.RegularExpressions;
 
 using NoP77svk.JsonDiff;
 
 [TestFixture]
 public class JsonDiff_Tests
 {
-    public static readonly IEnumerable<string> _testCaseFileNames = Directory.EnumerateFiles(nameof(JsonDiff_Tests), "*.json", SearchOption.AllDirectories);
+    private const string ShuffledFileSuffix = "shuffled";
+
+    public static IEnumerable<string> BasicTestCases => Directory.EnumerateFiles(nameof(JsonDiff_Tests), "*.json", SearchOption.AllDirectories)
+        .Where(fname => !fname.EndsWith($".{ShuffledFileSuffix}.json", StringComparison.OrdinalIgnoreCase));
+
+    public static IEnumerable<ShuffledJsonTestCase> ShuffledTestCases => Directory.EnumerateFiles(nameof(JsonDiff_Tests), $"*.{ShuffledFileSuffix}.json", SearchOption.AllDirectories)
+        .Select(fname => new ShuffledJsonTestCase(_rxRemoveShuffledSuffix.Replace(fname, ".json"), fname));
+
+    private static readonly Regex _rxRemoveShuffledSuffix = new Regex(@$"\.{ShuffledFileSuffix}\.json$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+
+#pragma warning disable SA1313
+    public record ShuffledJsonTestCase(string OriginalFileName, string ShuffledFileName);
+#pragma warning restore SA1313
 
     private readonly JsonDocumentOptions _jsonDocumentParseOptions = new()
     {
@@ -18,14 +32,17 @@ public class JsonDiff_Tests
         MaxDepth = 20
     };
 
+    private readonly SimpleJsonDiffFormatter<JsonElement> _jsonElementDiffFormatter = new();
+    private readonly SimpleJsonDiffFormatter<JsonNode?> _jsonNodeDiffFormatter = new();
+
     private readonly JsonNodeOptions _jsonNodeParseOptions = new()
     {
         PropertyNameCaseInsensitive = false
     };
 
     [Test]
-    [TestCaseSource(nameof(_testCaseFileNames))]
-    public async Task Basic_JsonElement_SelfComparison_WorksOK(string testCaseFileName)
+    [TestCaseSource(nameof(BasicTestCases))]
+    public async Task Basic_JsonElement_SelfComparison_ReturnsEmpty(string testCaseFileName)
     {
         // arrange
         using Stream testCaseStream = File.OpenRead(testCaseFileName);
@@ -35,12 +52,12 @@ public class JsonDiff_Tests
         IEnumerable<JsonDifference<JsonElement>> differences = jsonDocument.CompareWith(jsonDocument);
 
         // assert
-        Assert.That(differences, Is.Empty);
+        Assert.That(differences, Is.Empty, () => DifferencesToString(differences));
     }
 
     [Test]
-    [TestCaseSource(nameof(_testCaseFileNames))]
-    public async Task Basic_JsonNode_SelfComparison_WorksOK(string testCaseFileName)
+    [TestCaseSource(nameof(BasicTestCases))]
+    public async Task Basic_JsonNode_SelfComparison_ReturnsEmpty(string testCaseFileName)
     {
         // arrange
         using Stream testCaseStream = File.OpenRead(testCaseFileName);
@@ -52,44 +69,44 @@ public class JsonDiff_Tests
             ?? throw new InvalidOperationException("JsonNode parsing resulted in null");
 
         // assert
-        Assert.That(differences, Is.Empty);
+        Assert.That(differences, Is.Empty, () => DifferencesToString(differences));
     }
 
     [Test]
-    [TestCaseSource(nameof(_testCaseFileNames))]
-    public async Task JsonComparerInstance_JsonElement_SelfComparison_WorksOK(string testCaseFileName)
+    [TestCaseSource(nameof(BasicTestCases))]
+    public async Task JsonComparerInstance_JsonElement_SelfComparison_ReturnsEmpty(string testCaseFileName)
     {
         // arrange
         using Stream testCaseStream = File.OpenRead(testCaseFileName);
         using JsonDocument jsonDocument = await JsonDocument.ParseAsync(testCaseStream, _jsonDocumentParseOptions);
-        JsonElementComparer jsonComparer = new ();
+        JsonElementComparer jsonComparer = new();
 
         // act
         IEnumerable<JsonDifference<JsonElement>> differences = jsonComparer.EnumerateDifferences(jsonDocument.RootElement, jsonDocument.RootElement);
 
         // assert
-        Assert.That(differences, Is.Empty);
+        Assert.That(differences, Is.Empty, () => DifferencesToString(differences));
     }
 
     [Test]
-    [TestCaseSource(nameof(_testCaseFileNames))]
-    public async Task JsonComparerInstance_JsonNode_SelfComparison_WorksOK(string testCaseFileName)
+    [TestCaseSource(nameof(BasicTestCases))]
+    public async Task JsonComparerInstance_JsonNode_SelfComparison_ReturnsEmpty(string testCaseFileName)
     {
         // arrange
         using Stream testCaseStream = File.OpenRead(testCaseFileName);
         JsonNode? jsonDocument = await JsonNode.ParseAsync(testCaseStream, _jsonNodeParseOptions, _jsonDocumentParseOptions);
-        JsonNodeComparer jsonComparer = new ();
+        JsonNodeComparer jsonComparer = new();
 
         // act
         IEnumerable<JsonDifference<JsonNode?>> differences = jsonComparer.EnumerateDifferences(jsonDocument, jsonDocument);
 
         // assert
-        Assert.That(differences, Is.Empty);
+        Assert.That(differences, Is.Empty, () => DifferencesToString(differences));
     }
 
     [Test]
-    [TestCaseSource(nameof(_testCaseFileNames))]
-    public async Task JsonComparerInstance_JsonElement_SelfComparisonByPosition_WorksOK(string testCaseFileName)
+    [TestCaseSource(nameof(BasicTestCases))]
+    public async Task JsonComparerInstance_JsonElement_SelfComparisonByPosition_ReturnsEmpty(string testCaseFileName)
     {
         // arrange
         using Stream testCaseStream = File.OpenRead(testCaseFileName);
@@ -104,12 +121,12 @@ public class JsonDiff_Tests
         IEnumerable<JsonDifference<JsonElement>> differences = jsonComparer.EnumerateDifferences(jsonDocument.RootElement, jsonDocument.RootElement);
 
         // assert
-        Assert.That(differences, Is.Empty);
+        Assert.That(differences, Is.Empty, () => DifferencesToString(differences));
     }
 
     [Test]
-    [TestCaseSource(nameof(_testCaseFileNames))]
-    public async Task JsonComparerInstance_JsonNode_SelfComparisonByPosition_WorksOK(string testCaseFileName)
+    [TestCaseSource(nameof(BasicTestCases))]
+    public async Task JsonComparerInstance_JsonNode_SelfComparisonByPosition_ReturnsEmpty(string testCaseFileName)
     {
         // arrange
         using Stream testCaseStream = File.OpenRead(testCaseFileName);
@@ -124,12 +141,12 @@ public class JsonDiff_Tests
         IEnumerable<JsonDifference<JsonNode?>> differences = jsonComparer.EnumerateDifferences(jsonDocument, jsonDocument);
 
         // assert
-        Assert.That(differences, Is.Empty);
+        Assert.That(differences, Is.Empty, () => DifferencesToString(differences));
     }
 
     [Test]
-    [TestCaseSource(nameof(_testCaseFileNames))]
-    public async Task JsonComparerInstance_JsonElement_SelfComparisonByKeyAndPosition_WorksOK(string testCaseFileName)
+    [TestCaseSource(nameof(BasicTestCases))]
+    public async Task JsonComparerInstance_JsonElement_SelfComparisonByKeyAndPosition_ReturnsEmpty(string testCaseFileName)
     {
         // arrange
         using Stream testCaseStream = File.OpenRead(testCaseFileName);
@@ -144,12 +161,12 @@ public class JsonDiff_Tests
         IEnumerable<JsonDifference<JsonElement>> differences = jsonComparer.EnumerateDifferences(jsonDocument.RootElement, jsonDocument.RootElement);
 
         // assert
-        Assert.That(differences, Is.Empty);
+        Assert.That(differences, Is.Empty, () => DifferencesToString(differences));
     }
 
     [Test]
-    [TestCaseSource(nameof(_testCaseFileNames))]
-    public async Task JsonComparerInstance_JsonNode_SelfComparisonByKeyAndPosition_WorksOK(string testCaseFileName)
+    [TestCaseSource(nameof(BasicTestCases))]
+    public async Task JsonComparerInstance_JsonNode_SelfComparisonByKeyAndPosition_ReturnsEmpty(string testCaseFileName)
     {
         // arrange
         using Stream testCaseStream = File.OpenRead(testCaseFileName);
@@ -164,12 +181,12 @@ public class JsonDiff_Tests
         IEnumerable<JsonDifference<JsonNode?>> differences = jsonComparer.EnumerateDifferences(jsonDocument, jsonDocument);
 
         // assert
-        Assert.That(differences, Is.Empty);
+        Assert.That(differences, Is.Empty, () => DifferencesToString(differences));
     }
 
     [Test]
-    [TestCaseSource(nameof(_testCaseFileNames))]
-    public async Task JsonComparerInstance_JsonElement_SelfComparisonByPositionAndName_WorksOK(string testCaseFileName)
+    [TestCaseSource(nameof(BasicTestCases))]
+    public async Task JsonComparerInstance_JsonElement_SelfComparisonByPositionAndName_ReturnsEmpty(string testCaseFileName)
     {
         // arrange
         using Stream testCaseStream = File.OpenRead(testCaseFileName);
@@ -184,12 +201,12 @@ public class JsonDiff_Tests
         IEnumerable<JsonDifference<JsonElement>> differences = jsonComparer.EnumerateDifferences(jsonDocument.RootElement, jsonDocument.RootElement);
 
         // assert
-        Assert.That(differences, Is.Empty);
+        Assert.That(differences, Is.Empty, () => DifferencesToString(differences));
     }
 
     [Test]
-    [TestCaseSource(nameof(_testCaseFileNames))]
-    public async Task JsonComparerInstance_JsonNode_SelfComparisonByPositionAndName_WorksOK(string testCaseFileName)
+    [TestCaseSource(nameof(BasicTestCases))]
+    public async Task JsonComparerInstance_JsonNode_SelfComparisonByPositionAndName_ReturnsEmpty(string testCaseFileName)
     {
         // arrange
         using Stream testCaseStream = File.OpenRead(testCaseFileName);
@@ -204,12 +221,12 @@ public class JsonDiff_Tests
         IEnumerable<JsonDifference<JsonNode?>> differences = jsonComparer.EnumerateDifferences(jsonDocument, jsonDocument);
 
         // assert
-        Assert.That(differences, Is.Empty);
+        Assert.That(differences, Is.Empty, () => DifferencesToString(differences));
     }
 
     [Test]
-    [TestCaseSource(nameof(_testCaseFileNames))]
-    public async Task JsonComparerInstance_JsonElement_SelfComparisonByKeyAndName_WorksOK(string testCaseFileName)
+    [TestCaseSource(nameof(BasicTestCases))]
+    public async Task JsonComparerInstance_JsonElement_SelfComparisonByKeyAndName_ReturnsEmpty(string testCaseFileName)
     {
         // arrange
         using Stream testCaseStream = File.OpenRead(testCaseFileName);
@@ -224,12 +241,12 @@ public class JsonDiff_Tests
         IEnumerable<JsonDifference<JsonElement>> differences = jsonComparer.EnumerateDifferences(jsonDocument.RootElement, jsonDocument.RootElement);
 
         // assert
-        Assert.That(differences, Is.Empty);
+        Assert.That(differences, Is.Empty, () => DifferencesToString(differences));
     }
 
     [Test]
-    [TestCaseSource(nameof(_testCaseFileNames))]
-    public async Task JsonComparerInstance_JsonNode_SelfComparisonByKeyAndName_WorksOK(string testCaseFileName)
+    [TestCaseSource(nameof(BasicTestCases))]
+    public async Task JsonComparerInstance_JsonNode_SelfComparisonByKeyAndName_ReturnsEmpty(string testCaseFileName)
     {
         // arrange
         using Stream testCaseStream = File.OpenRead(testCaseFileName);
@@ -244,6 +261,230 @@ public class JsonDiff_Tests
         IEnumerable<JsonDifference<JsonNode?>> differences = jsonComparer.EnumerateDifferences(jsonDocument, jsonDocument);
 
         // assert
-        Assert.That(differences, Is.Empty);
+        Assert.That(differences, Is.Empty, () => DifferencesToString(differences));
+    }
+
+    [Test]
+    [TestCaseSource(nameof(ShuffledTestCases))]
+    public async Task JsonElement_ShuffledComparisonByKeyAndName_ReturnsEmpty(ShuffledJsonTestCase testCase)
+    {
+        // arrange
+        using Stream originalJsonStream = File.OpenRead(testCase.OriginalFileName);
+        using JsonDocument originalJsonDocument = await JsonDocument.ParseAsync(originalJsonStream, _jsonDocumentParseOptions);
+
+        using Stream shuffledJsonStream = File.OpenRead(testCase.ShuffledFileName);
+        using JsonDocument shuffledJsonDocument = await JsonDocument.ParseAsync(shuffledJsonStream, _jsonDocumentParseOptions);
+
+        JsonElementComparer jsonComparer = new()
+        {
+            ArrayElementMatchingStrategy = MatchJsonArrayElementsBy.Key,
+            ObjectPropertiesMatchingStrategy = MatchJsonObjectPropertiesBy.Name
+        };
+
+        // act
+        IEnumerable<JsonDifference<JsonElement>> differences = jsonComparer.EnumerateDifferences(originalJsonDocument.RootElement, shuffledJsonDocument.RootElement);
+
+        // assert
+        Assert.That(differences, Is.Not.Empty, () => DifferencesToString(differences));
+    }
+
+    [Test]
+    [TestCaseSource(nameof(ShuffledTestCases))]
+    public async Task JsonNode_ShuffledComparisonByKeyAndName_ReturnsEmpty(ShuffledJsonTestCase testCase)
+    {
+        // arrange
+        using Stream originalJsonStream = File.OpenRead(testCase.OriginalFileName);
+        JsonNode? originalJsonDocument = await JsonNode.ParseAsync(originalJsonStream, _jsonNodeParseOptions, _jsonDocumentParseOptions);
+
+        using Stream shuffledJsonStream = File.OpenRead(testCase.ShuffledFileName);
+        JsonNode? shuffledJsonDocument = await JsonNode.ParseAsync(shuffledJsonStream, _jsonNodeParseOptions, _jsonDocumentParseOptions);
+
+        JsonNodeComparer jsonComparer = new()
+        {
+            ArrayElementMatchingStrategy = MatchJsonArrayElementsBy.Key,
+            ObjectPropertiesMatchingStrategy = MatchJsonObjectPropertiesBy.Name
+        };
+
+        // act
+        IEnumerable<JsonDifference<JsonNode?>> differences = jsonComparer.EnumerateDifferences(originalJsonDocument, shuffledJsonDocument);
+
+        // assert
+        Assert.That(differences, Is.Not.Empty, () => DifferencesToString(differences));
+    }
+
+    [Test]
+    [TestCaseSource(nameof(ShuffledTestCases))]
+    public async Task JsonElement_ShuffledComparisonByPositionAndName_ReturnsDifferences(ShuffledJsonTestCase testCase)
+    {
+        // arrange
+        using Stream originalJsonStream = File.OpenRead(testCase.OriginalFileName);
+        using JsonDocument originalJsonDocument = await JsonDocument.ParseAsync(originalJsonStream, _jsonDocumentParseOptions);
+
+        using Stream shuffledJsonStream = File.OpenRead(testCase.ShuffledFileName);
+        using JsonDocument shuffledJsonDocument = await JsonDocument.ParseAsync(shuffledJsonStream, _jsonDocumentParseOptions);
+
+        JsonElementComparer jsonComparer = new()
+        {
+            ArrayElementMatchingStrategy = MatchJsonArrayElementsBy.Position,
+            ObjectPropertiesMatchingStrategy = MatchJsonObjectPropertiesBy.Name
+        };
+
+        // act
+        IEnumerable<JsonDifference<JsonElement>> differences = jsonComparer.EnumerateDifferences(originalJsonDocument.RootElement, shuffledJsonDocument.RootElement);
+
+        // assert
+        Assert.That(differences, Is.Not.Empty, () => DifferencesToString(differences));
+    }
+
+    [Test]
+    [TestCaseSource(nameof(ShuffledTestCases))]
+    public async Task JsonNode_ShuffledComparisonByPositionAndName_ReturnsDifferences(ShuffledJsonTestCase testCase)
+    {
+        // arrange
+        using Stream originalJsonStream = File.OpenRead(testCase.OriginalFileName);
+        JsonNode? originalJsonDocument = await JsonNode.ParseAsync(originalJsonStream, _jsonNodeParseOptions, _jsonDocumentParseOptions);
+
+        using Stream shuffledJsonStream = File.OpenRead(testCase.ShuffledFileName);
+        JsonNode? shuffledJsonDocument = await JsonNode.ParseAsync(shuffledJsonStream, _jsonNodeParseOptions, _jsonDocumentParseOptions);
+
+        JsonNodeComparer jsonComparer = new()
+        {
+            ArrayElementMatchingStrategy = MatchJsonArrayElementsBy.Position,
+            ObjectPropertiesMatchingStrategy = MatchJsonObjectPropertiesBy.Name
+        };
+
+        // act
+        IEnumerable<JsonDifference<JsonNode?>> differences = jsonComparer.EnumerateDifferences(originalJsonDocument, shuffledJsonDocument);
+
+        // assert
+        Assert.That(differences, Is.Not.Empty, () => DifferencesToString(differences));
+    }
+
+    [Test]
+    [TestCaseSource(nameof(ShuffledTestCases))]
+    public async Task JsonElement_ShuffledComparisonByKeyAndPosition_ReturnsDifferences(ShuffledJsonTestCase testCase)
+    {
+        // arrange
+        using Stream originalJsonStream = File.OpenRead(testCase.OriginalFileName);
+        using JsonDocument originalJsonDocument = await JsonDocument.ParseAsync(originalJsonStream, _jsonDocumentParseOptions);
+
+        using Stream shuffledJsonStream = File.OpenRead(testCase.ShuffledFileName);
+        using JsonDocument shuffledJsonDocument = await JsonDocument.ParseAsync(shuffledJsonStream, _jsonDocumentParseOptions);
+
+        JsonElementComparer jsonComparer = new()
+        {
+            ArrayElementMatchingStrategy = MatchJsonArrayElementsBy.Key,
+            ObjectPropertiesMatchingStrategy = MatchJsonObjectPropertiesBy.Position
+        };
+
+        // act
+        IEnumerable<JsonDifference<JsonElement>> differences = jsonComparer.EnumerateDifferences(originalJsonDocument.RootElement, shuffledJsonDocument.RootElement);
+
+        // assert
+        Assert.That(differences, Is.Not.Empty, () => DifferencesToString(differences));
+    }
+
+    [Test]
+    [TestCaseSource(nameof(ShuffledTestCases))]
+    public async Task JsonNode_ShuffledComparisonByKeyAndPosition_ReturnsDifferences(ShuffledJsonTestCase testCase)
+    {
+        // arrange
+        using Stream originalJsonStream = File.OpenRead(testCase.OriginalFileName);
+        JsonNode? originalJsonDocument = await JsonNode.ParseAsync(originalJsonStream, _jsonNodeParseOptions, _jsonDocumentParseOptions);
+
+        using Stream shuffledJsonStream = File.OpenRead(testCase.ShuffledFileName);
+        JsonNode? shuffledJsonDocument = await JsonNode.ParseAsync(shuffledJsonStream, _jsonNodeParseOptions, _jsonDocumentParseOptions);
+
+        JsonNodeComparer jsonComparer = new()
+        {
+            ArrayElementMatchingStrategy = MatchJsonArrayElementsBy.Key,
+            ObjectPropertiesMatchingStrategy = MatchJsonObjectPropertiesBy.Position
+        };
+
+        // act
+        IEnumerable<JsonDifference<JsonNode?>> differences = jsonComparer.EnumerateDifferences(originalJsonDocument, shuffledJsonDocument);
+
+        // assert
+        Assert.That(differences, Is.Not.Empty, () => DifferencesToString(differences));
+    }
+
+    [Test]
+    [TestCaseSource(nameof(ShuffledTestCases))]
+    public async Task JsonElement_ShuffledComparisonByPositionAndPosition_ReturnsDifferences(ShuffledJsonTestCase testCase)
+    {
+        // arrange
+        using Stream originalJsonStream = File.OpenRead(testCase.OriginalFileName);
+        using JsonDocument originalJsonDocument = await JsonDocument.ParseAsync(originalJsonStream, _jsonDocumentParseOptions);
+
+        using Stream shuffledJsonStream = File.OpenRead(testCase.ShuffledFileName);
+        using JsonDocument shuffledJsonDocument = await JsonDocument.ParseAsync(shuffledJsonStream, _jsonDocumentParseOptions);
+
+        JsonElementComparer jsonComparer = new()
+        {
+            ArrayElementMatchingStrategy = MatchJsonArrayElementsBy.Position,
+            ObjectPropertiesMatchingStrategy = MatchJsonObjectPropertiesBy.Position
+        };
+
+        // act
+        IEnumerable<JsonDifference<JsonElement>> differences = jsonComparer.EnumerateDifferences(originalJsonDocument.RootElement, shuffledJsonDocument.RootElement);
+
+        // assert
+        Assert.That(differences, Is.Not.Empty, () => DifferencesToString(differences));
+    }
+
+    [Test]
+    [TestCaseSource(nameof(ShuffledTestCases))]
+    public async Task JsonNode_ShuffledComparisonByPositionAndPosition_ReturnsDifferences(ShuffledJsonTestCase testCase)
+    {
+        // arrange
+        using Stream originalJsonStream = File.OpenRead(testCase.OriginalFileName);
+        JsonNode? originalJsonDocument = await JsonNode.ParseAsync(originalJsonStream, _jsonNodeParseOptions, _jsonDocumentParseOptions);
+
+        using Stream shuffledJsonStream = File.OpenRead(testCase.ShuffledFileName);
+        JsonNode? shuffledJsonDocument = await JsonNode.ParseAsync(shuffledJsonStream, _jsonNodeParseOptions, _jsonDocumentParseOptions);
+
+        JsonNodeComparer jsonComparer = new()
+        {
+            ArrayElementMatchingStrategy = MatchJsonArrayElementsBy.Position,
+            ObjectPropertiesMatchingStrategy = MatchJsonObjectPropertiesBy.Position
+        };
+
+        // act
+        IEnumerable<JsonDifference<JsonNode?>> differences = jsonComparer.EnumerateDifferences(originalJsonDocument, shuffledJsonDocument);
+
+        // assert
+        Assert.That(differences, Is.Not.Empty, () => DifferencesToString(differences));
+    }
+
+    private string DifferencesToString(IEnumerable<JsonDifference<JsonElement>> differences)
+    {
+        StringBuilder result = new();
+        result.AppendLine("Differences:");
+        result.AppendLine("------------------------------------------------------------------------------");
+
+        foreach (string diff in differences.AsFormattedStrings(_jsonElementDiffFormatter))
+        {
+            result.AppendLine(diff);
+        }
+
+        result.AppendLine("------------------------------------------------------------------------------");
+
+        return result.ToString();
+    }
+
+    private string DifferencesToString(IEnumerable<JsonDifference<JsonNode?>> differences)
+    {
+        StringBuilder result = new();
+        result.AppendLine("Differences:");
+        result.AppendLine("------------------------------------------------------------------------------");
+
+        foreach (string diff in differences.AsFormattedStrings(_jsonNodeDiffFormatter))
+        {
+            result.AppendLine(diff);
+        }
+
+        result.AppendLine("------------------------------------------------------------------------------");
+
+        return result.ToString();
     }
 }
