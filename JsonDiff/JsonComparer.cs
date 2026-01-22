@@ -107,8 +107,8 @@ public class JsonComparer<TNode>
         IEnumerable<JsonDiffArrayElementDescriptor<TNode>> rightObjectProperties)
         => ObjectPropertiesMatchingStrategy switch
         {
-            MatchJsonObjectPropertiesBy.Name => EnumerateElementsDifferencesByPosition(jsonPath, leftObjectProperties, rightObjectProperties, JsonDiffHelpers.JsonPathCombineWithArrayIndex),
-            MatchJsonObjectPropertiesBy.Position => EnumerateElementsDifferencesByKey(jsonPath, leftObjectProperties, rightObjectProperties, JsonDiffHelpers.JsonPathCombinePropertyName),
+            MatchJsonObjectPropertiesBy.Position => EnumerateElementsDifferencesByPosition(jsonPath, leftObjectProperties, rightObjectProperties, JsonDiffHelpers.JsonPathCombineWithArrayIndex),
+            MatchJsonObjectPropertiesBy.Name => EnumerateElementsDifferencesByKey(jsonPath, leftObjectProperties, rightObjectProperties, JsonDiffHelpers.JsonPathCombinePropertyName),
             _ => throw new NotImplementedException($"Matching object properties by '{ObjectPropertiesMatchingStrategy}' is not (yet) implemented."),
         };
 
