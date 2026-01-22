@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Library</OutputType>
+
+        <RootNamespace>NoP77svk.JsonDiff</RootNamespace>
+        <AssemblyName>NoP77svk.JsonDiff</AssemblyName>
+        <PackageId>NoP77svk.JsonDiff</PackageId>
+        <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    </PropertyGroup>
+
+</Project>
