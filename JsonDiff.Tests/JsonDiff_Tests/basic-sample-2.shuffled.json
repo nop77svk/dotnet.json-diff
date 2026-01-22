@@ -31,8 +31,8 @@
                   },
                   "camera": {
                     "rear": [
-                      {"megapixels": 50, "type": "ultrawide"},
                       {"megapixels": 200, "type": "main"},
+                      {"megapixels": 50, "type": "ultrawide"},
                       {"megapixels": 10, "type": "telephoto"}
                     ],
                     "front": {"megapixels": 12, "type": "selfie"}

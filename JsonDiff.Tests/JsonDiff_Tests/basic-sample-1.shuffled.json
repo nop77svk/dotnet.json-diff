@@ -26,7 +26,7 @@
           "id": 1001,
           "position": "Senior Developer",
           "name": "Alice Johnson",
-          "skills": ["Docker", "C#", "Python", "JavaScript", "Kubernetes"],
+          "skills": ["C#", "Python", "JavaScript", "Docker", "Kubernetes"],
           "projects": [
             {
               "name": "Project Alpha",
@@ -35,9 +35,9 @@
                 "start": "2025-01-15",
                 "end": "2025-06-30",
                 "milestones": [
-                  {"name": "Design", "status": "completed", "date": "2025-02-01"},
-                  {"name": "Testing", "date": "2025-06-01", "status": "pending"},
-                  {"name": "Development", "date": "2025-04-15", "status": "in_progress"}
+                  {"name": "Design", "date": "2025-02-01", "status": "completed"},
+                  {"name": "Development", "date": "2025-04-15", "status": "in_progress"},
+                  {"name": "Testing", "date": "2025-06-01", "status": "pending"}
                 ]
               }
             }
