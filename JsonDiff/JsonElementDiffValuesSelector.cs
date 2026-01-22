@@ -26,7 +26,7 @@ public sealed class JsonElementDiffValuesSelector : IJsonDiffNodeValuesSelector<
 
     public string GetArrayElementDescriptor(int index, JsonElement node)
         => ArrayElementDescriptorSelector?.Invoke(index, node)
-        ?? index.ToString();
+        ?? $"element #{index}";
 
     public IEnumerable<JsonDiffArrayElementDescriptor<JsonElement>> GetObjectProperties(JsonElement node)
         => node.EnumerateObject()

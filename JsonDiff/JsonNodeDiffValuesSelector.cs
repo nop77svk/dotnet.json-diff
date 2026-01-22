@@ -33,5 +33,5 @@ public sealed class JsonNodeDiffValuesSelector : IJsonDiffNodeValuesSelector<Jso
 
     public string GetArrayElementDescriptor(int index, JsonNode? node)
         => ArrayElementDescriptorSelector?.Invoke(index, node)
-        ?? index.ToString();
+        ?? $"element #{index}";
 }
