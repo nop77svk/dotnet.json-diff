@@ -11,6 +11,7 @@ using NoP77svk.JsonDiff;
 public class JsonDiff_Tests
 {
     private const string ShuffledFileSuffix = "shuffled";
+    private const string ShuffledKvpFileSuffix = "shuffled-kvp";
 
     public static IEnumerable<string> BasicTestCases => Directory.EnumerateFiles(nameof(JsonDiff_Tests), "*.json", SearchOption.AllDirectories)
         .Where(fname => !fname.EndsWith($".{ShuffledFileSuffix}.json", StringComparison.OrdinalIgnoreCase));
@@ -18,7 +19,12 @@ public class JsonDiff_Tests
     public static IEnumerable<ShuffledJsonTestCase> ShuffledTestCases => Directory.EnumerateFiles(nameof(JsonDiff_Tests), $"*.{ShuffledFileSuffix}.json", SearchOption.AllDirectories)
         .Select(fname => new ShuffledJsonTestCase(_rxRemoveShuffledSuffix.Replace(fname, ".json"), fname));
 
+    public static IEnumerable<ShuffledJsonTestCase> ShuffledKvpTestCases => Directory.EnumerateFiles(nameof(JsonDiff_Tests), $"*.{ShuffledKvpFileSuffix}.json", SearchOption.AllDirectories)
+        .Select(fname => new ShuffledJsonTestCase(_rxRemoveShuffledKvpSuffix.Replace(fname, ".json"), fname));
+
     private static readonly Regex _rxRemoveShuffledSuffix = new Regex(@$"\.{ShuffledFileSuffix}\.json$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+
+    private static readonly Regex _rxRemoveShuffledKvpSuffix = new Regex(@$"\.{ShuffledKvpFileSuffix}\.json$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
 #pragma warning disable SA1313
     public record ShuffledJsonTestCase(string OriginalFileName, string ShuffledFileName);
@@ -312,7 +318,7 @@ public class JsonDiff_Tests
         IEnumerable<JsonDifference<JsonElement>> differences = jsonComparer.EnumerateDifferences(originalJsonDocument.RootElement, shuffledJsonDocument.RootElement);
 
         // assert
-        Assert.That(differences, Is.Not.Empty);
+        Assert.That(differences, Is.Empty, () => DifferencesToString(differences));
     }
 
     [Test]
@@ -339,12 +345,12 @@ public class JsonDiff_Tests
         IEnumerable<JsonDifference<JsonNode?>> differences = jsonComparer.EnumerateDifferences(originalJsonDocument, shuffledJsonDocument);
 
         // assert
-        Assert.That(differences, Is.Not.Empty);
+        Assert.That(differences, Is.Empty, () => DifferencesToString(differences));
     }
 
     [Test]
     [TestCaseSource(nameof(ShuffledTestCases))]
-    public async Task JsonElement_ShuffledComparisonByPositionAndName_ReturnsDifferences(ShuffledJsonTestCase testCase)
+    public async Task JsonElement_ShuffledComparisonByPositionAndName_ReturnsEmpty(ShuffledJsonTestCase testCase)
     {
         // arrange
         await TestContext.Out.WriteLineAsync($"Original file: {testCase.OriginalFileName}");
@@ -366,12 +372,12 @@ public class JsonDiff_Tests
         IEnumerable<JsonDifference<JsonElement>> differences = jsonComparer.EnumerateDifferences(originalJsonDocument.RootElement, shuffledJsonDocument.RootElement);
 
         // assert
-        Assert.That(differences, Is.Not.Empty);
+        Assert.That(differences, Is.Empty, () => DifferencesToString(differences));
     }
 
     [Test]
     [TestCaseSource(nameof(ShuffledTestCases))]
-    public async Task JsonNode_ShuffledComparisonByPositionAndName_ReturnsDifferences(ShuffledJsonTestCase testCase)
+    public async Task JsonNode_ShuffledComparisonByPositionAndName_ReturnsEmpty(ShuffledJsonTestCase testCase)
     {
         // arrange
         await TestContext.Out.WriteLineAsync($"Original file: {testCase.OriginalFileName}");
@@ -393,7 +399,7 @@ public class JsonDiff_Tests
         IEnumerable<JsonDifference<JsonNode?>> differences = jsonComparer.EnumerateDifferences(originalJsonDocument, shuffledJsonDocument);
 
         // assert
-        Assert.That(differences, Is.Not.Empty);
+        Assert.That(differences, Is.Empty, () => DifferencesToString(differences));
     }
 
     [Test]
