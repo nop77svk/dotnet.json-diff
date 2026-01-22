@@ -7,7 +7,7 @@ using System.Text.Json.Nodes;
 public static class JsonComparerExtensions
 {
     public static IEnumerable<JsonDifference<TNode>> CompareWith<TNode>(this TNode? leftDocument, TNode? rightDocument, IJsonDiffNodeValuesSelector<TNode> nodeValuesSelector)
-        => new JsonComparer<TNode>(nodeValuesSelector).EnumerateDifferences(@"$", leftDocument, rightDocument);
+        => new JsonComparer<TNode>(nodeValuesSelector).EnumerateDifferences(leftDocument, rightDocument);
 
     public static IEnumerable<JsonDifference<JsonElement>> CompareWith(this JsonDocument leftDocument, JsonDocument rightDocument)
         => leftDocument.RootElement.CompareWith(rightDocument.RootElement);
