@@ -215,7 +215,7 @@ public class JsonComparer<TNode>
                 .ToList();
 
             IEnumerable<JsonDifference<TNode>> differences = leftElementValues.Count > 1 || rightElementValues.Count > 1
-                ? EnumerateObjectPropertiesDifferences(elementJsonPath, leftElementValues, rightElementValues)
+                ? EnumerateElementsDifferencesByPosition(elementJsonPath, leftElementValues, rightElementValues, JsonDiffHelpers.JsonPathCombineWithArrayIndex)
                 : EnumerateDifferences(elementJsonPath, leftElementValues[0].ArrayElement, rightElementValues[0].ArrayElement);
 
             foreach (var difference in differences)
