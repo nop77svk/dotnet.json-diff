@@ -23,15 +23,15 @@ public sealed class JsonNodeDiffValuesSelector : IJsonDiffNodeValuesSelector<Jso
 
     public IEnumerable<JsonDiffArrayElementDescriptor<JsonNode?>> GetArrayValues(JsonNode? node)
         => node?.AsArray()
-        .Select((element, index) => new JsonDiffArrayElementDescriptor<JsonNode?>(index, GetArrayElementDescriptor(index, element), element))
-        ?? Enumerable.Empty<JsonDiffArrayElementDescriptor<JsonNode?>>();
-
-    public IEnumerable<JsonDiffArrayElementDescriptor<JsonNode?>> GetObjectProperties(JsonNode? node)
-        => node?.AsObject()
-        .Select((property, index) => new JsonDiffArrayElementDescriptor<JsonNode?>(index, property.Key, property.Value))
+        ?.Select((element, index) => new JsonDiffArrayElementDescriptor<JsonNode?>(index, GetArrayElementDescriptor(index, element), element))
         ?? Enumerable.Empty<JsonDiffArrayElementDescriptor<JsonNode?>>();
 
     public string GetArrayElementDescriptor(int index, JsonNode? node)
         => ArrayElementDescriptorSelector?.Invoke(index, node)
         ?? $"element #{index}";
+
+    public IEnumerable<JsonDiffArrayElementDescriptor<JsonNode?>> GetObjectProperties(JsonNode? node)
+        => node?.AsObject()
+        .Select((property, index) => new JsonDiffArrayElementDescriptor<JsonNode?>(index, property.Key, property.Value))
+        ?? Enumerable.Empty<JsonDiffArrayElementDescriptor<JsonNode?>>();
 }

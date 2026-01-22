@@ -22,7 +22,7 @@ public sealed class JsonElementDiffValuesSelector : IJsonDiffNodeValuesSelector<
 
     public IEnumerable<JsonDiffArrayElementDescriptor<JsonElement>> GetArrayValues(JsonElement node)
         => node.EnumerateArray()
-        .Select((element, index) => new JsonDiffArrayElementDescriptor<JsonElement>(index, GetArrayElementDescriptor(index, node), element));
+        .Select((element, index) => new JsonDiffArrayElementDescriptor<JsonElement>(index, GetArrayElementDescriptor(index, element), element));
 
     public string GetArrayElementDescriptor(int index, JsonElement node)
         => ArrayElementDescriptorSelector?.Invoke(index, node)
