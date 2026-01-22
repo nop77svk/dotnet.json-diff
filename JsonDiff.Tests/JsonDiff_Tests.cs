@@ -524,7 +524,33 @@ public class JsonDiff_Tests
         using Stream shuffledJsonStream = File.OpenRead(testCase.ShuffledFileName);
         using JsonDocument shuffledJsonDocument = await JsonDocument.ParseAsync(shuffledJsonStream, _jsonDocumentParseOptions);
 
-        JsonElementComparer jsonComparer = new()
+        IJsonDiffNodeValuesSelector<JsonElement> kvpMatchingNodeValuesSelector = new JsonElementDiffValuesSelector()
+        {
+            ArrayElementDescriptorSelector = (index, element) =>
+            {
+                if (element.ValueKind is not JsonValueKind.Object)
+                {
+                    return $"element #{index}";
+                }
+
+                string? result = null;
+                if (element.TryGetProperty("key", out JsonElement keyProperty)
+                    || element.TryGetProperty("id", out keyProperty)
+                    || element.TryGetProperty("type", out keyProperty)
+                    || element.TryGetProperty("org_id", out keyProperty)
+                    || element.TryGetProperty("user_id", out keyProperty)
+                    || element.TryGetProperty("widget_id", out keyProperty))
+                {
+                    result = keyProperty.ValueKind is JsonValueKind.String or JsonValueKind.Number
+                        ? keyProperty.GetRawText()
+                        : null;
+                }
+
+                return result ?? $"element #{index}";
+            }
+        };
+
+        JsonComparer<JsonElement> jsonComparer = new(kvpMatchingNodeValuesSelector)
         {
             ArrayElementMatchingStrategy = MatchJsonArrayElementsBy.Key,
             ObjectPropertiesMatchingStrategy = MatchJsonObjectPropertiesBy.Name
@@ -551,7 +577,33 @@ public class JsonDiff_Tests
         using Stream shuffledJsonStream = File.OpenRead(testCase.ShuffledFileName);
         JsonNode? shuffledJsonDocument = await JsonNode.ParseAsync(shuffledJsonStream, _jsonNodeParseOptions, _jsonDocumentParseOptions);
 
-        JsonNodeComparer jsonComparer = new()
+        IJsonDiffNodeValuesSelector<JsonNode?> kvpMatchingNodeValuesSelector = new JsonNodeDiffValuesSelector()
+        {
+            ArrayElementDescriptorSelector = (index, elementNode) =>
+            {
+                if (elementNode is not JsonObject element)
+                {
+                    return $"element #{index}";
+                }
+
+                string? result = null;
+                if (element.TryGetPropertyValue("key", out JsonNode? keyProperty)
+                    || element.TryGetPropertyValue("id", out keyProperty)
+                    || element.TryGetPropertyValue("type", out keyProperty)
+                    || element.TryGetPropertyValue("org_id", out keyProperty)
+                    || element.TryGetPropertyValue("user_id", out keyProperty)
+                    || element.TryGetPropertyValue("widget_id", out keyProperty))
+                {
+                    result = keyProperty?.GetValueKind() is JsonValueKind.String or JsonValueKind.Number
+                        ? keyProperty.GetValue<string>()
+                        : null;
+                }
+
+                return result ?? $"element #{index}";
+            }
+        };
+
+        JsonComparer<JsonNode> jsonComparer = new(kvpMatchingNodeValuesSelector)
         {
             ArrayElementMatchingStrategy = MatchJsonArrayElementsBy.Key,
             ObjectPropertiesMatchingStrategy = MatchJsonObjectPropertiesBy.Name
