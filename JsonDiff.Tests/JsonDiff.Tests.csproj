@@ -28,6 +28,14 @@
 		</None>
 	</ItemGroup>
 
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net6.0'">
+		<SuppressTfmSupportBuildErrors>true</SuppressTfmSupportBuildErrors>
+	</PropertyGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+		<PackageReference Update="NUnit3TestAdapter" Version="5.*" />
+	</ItemGroup>
+
 	<ItemGroup>
 		<ProjectReference Include="..\JsonDiff\JsonDiff.csproj" />
 	</ItemGroup>

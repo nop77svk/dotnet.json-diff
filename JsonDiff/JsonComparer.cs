@@ -227,6 +227,7 @@ public class JsonElementComparer : JsonComparer<JsonElement>
     }
 }
 
+#if NET8_0_OR_GREATER
 public class JsonNodeComparer : JsonComparer<JsonNode?>
 {
     public JsonNodeComparer()
@@ -234,6 +235,7 @@ public class JsonNodeComparer : JsonComparer<JsonNode?>
     {
     }
 }
+#endif
 
 public enum MatchJsonArrayElementsBy
 {
