@@ -3,19 +3,43 @@ namespace NoP77svk.JsonDiff;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
+/// <summary>
+/// The core JSON comparer implementation.
+/// </summary>
+/// <typeparam name="TNode">Either JsonNode or JsonElement... or anything else, possibly.</typeparam>
 public class JsonComparer<TNode>
 {
     private readonly IJsonDiffNodeValuesSelector<TNode> _nodeValuesSelector;
 
+    /// <summary>
+    /// Gets/inits the strategy to match JSON array elements<list type="bullet"><item>either by the element position/index (default),</item><item>or by the element key (calculated via supplied node values selector's <c>GetArrayElementKey()</c> callback).</item></list>
+    /// </summary>
     public MatchJsonArrayElementsBy ArrayElementMatchingStrategy { get; init; } = MatchJsonArrayElementsBy.Position;
 
+    /// <summary>
+    /// Gets/inits the strategy to match JSON object properties<list type="bullet"><item>either by the property name (default),</item><item>or by the property position/index.</item></list>
+    /// </summary>
     public MatchJsonObjectPropertiesBy ObjectPropertiesMatchingStrategy { get; init; } = MatchJsonObjectPropertiesBy.Name;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="JsonComparer{TNode}"/> class.
+    /// </summary>
+    /// <param name="nodeValuesSelector">The instance of the actual "worked" that reads the properties, arrays, property values from the <typeparamref name="TNode"/> JSON type.</param>
     public JsonComparer(IJsonDiffNodeValuesSelector<TNode> nodeValuesSelector)
     {
         _nodeValuesSelector = nodeValuesSelector;
     }
 
+    /// <summary>
+    /// Enumerates the differences between two JSON documents/nodes.
+    /// </summary>
+    /// <param name="leftNode">Left JSON document/node.</param>
+    /// <param name="rightNode">Right JSON document/node.</param>
+    /// <returns>
+    ///     <para>An enumerable with differences, one for extra/changed value from the left side, one for extra/changed value from the right side.</para>
+    ///     <para>If there's only a "left" side node returned, it means there was no matching "right" side node.</para>
+    ///     <para>If there's only a "right" side node returned, it means there was no matching "left" side node.</para>
+    /// </returns>
     public IEnumerable<JsonDifference<TNode>> EnumerateDifferences(TNode? leftNode, TNode? rightNode)
         => EnumerateDifferences(jsonPath: "$", leftNode: leftNode, rightNode: rightNode);
 
