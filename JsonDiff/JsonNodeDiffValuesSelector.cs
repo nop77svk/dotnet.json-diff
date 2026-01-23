@@ -23,10 +23,10 @@ public sealed class JsonNodeDiffValuesSelector : IJsonDiffNodeValuesSelector<Jso
 
     public IEnumerable<JsonDiffArrayElementDescriptor<JsonNode?>> GetArrayValues(JsonNode? node)
         => node?.AsArray()
-        ?.Select((element, index) => new JsonDiffArrayElementDescriptor<JsonNode?>(index, GetArrayElementDescriptor(index, element), element))
+        ?.Select((element, index) => new JsonDiffArrayElementDescriptor<JsonNode?>(index, GetArrayElementKey(index, element), element))
         ?? Enumerable.Empty<JsonDiffArrayElementDescriptor<JsonNode?>>();
 
-    public string GetArrayElementDescriptor(int index, JsonNode? node)
+    public string GetArrayElementKey(int index, JsonNode? node)
         => ArrayElementDescriptorSelector?.Invoke(index, node)
         ?? $"element #{index}";
 

@@ -17,7 +17,7 @@ public interface IJsonDiffNodeValuesSelector<TNode>
 
     IEnumerable<JsonDiffArrayElementDescriptor<TNode>> GetArrayValues(TNode? node);
 
-    string GetArrayElementDescriptor(int index, TNode? node);
+    string GetArrayElementKey(int index, TNode? node);
 
     IEnumerable<JsonDiffArrayElementDescriptor<TNode>> GetObjectProperties(TNode? node);
 }
