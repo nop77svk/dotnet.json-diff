@@ -1,4 +1,3 @@
-#if NET8_0_OR_GREATER
 namespace NoP77svk.JsonDiff;
 
 using System.Text.Json;
@@ -34,4 +33,3 @@ public sealed class JsonNodeDiffValuesSelector : IJsonDiffNodeValuesSelector<Jso
         .Select((property, index) => new JsonDiffArrayElementDescriptor<JsonNode?>(index, property.Key, property.Value))
         ?? Enumerable.Empty<JsonDiffArrayElementDescriptor<JsonNode?>>();
 }
-#endif

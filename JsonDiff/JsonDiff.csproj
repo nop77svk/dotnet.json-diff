@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
+		<TargetFramework>netstandard2.1</TargetFramework>
         <OutputType>Library</OutputType>
 
         <RootNamespace>NoP77svk.JsonDiff</RootNamespace>
@@ -11,5 +12,9 @@
 	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="System.Text.Json" Version="8.*-*" />
+	</ItemGroup>
 
 </Project>
