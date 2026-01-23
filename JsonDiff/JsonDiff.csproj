@@ -7,7 +7,8 @@
 		<AssemblyName>NoP77svk.JsonDiff</AssemblyName>
 		<PackageId>NoP77svk.JsonDiff</PackageId>
 
-		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageReadmeFile>/README.md</PackageReadmeFile>
+		<PackageIcon>jsondiff.icon.png</PackageIcon>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
@@ -17,6 +18,7 @@
 	<ItemGroup>
 		<PackageReference Include="System.Text.Json" Version="8.*-*" />
 
-		<None Include="README.md" Pack="true" PackagePath="\"/>
+		<None Include="$(ProjectDir)/_assets/README.md" Pack="true" PackagePath="\" />
+		<None Include="$(ProjectDir)/_assets/jsondiff.icon.png" Pack="true" PackagePath="\"/>
 	</ItemGroup>
 </Project>
