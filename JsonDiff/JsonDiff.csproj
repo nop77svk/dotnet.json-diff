@@ -5,11 +5,16 @@
 
 		<RootNamespace>NoP77svk.JsonDiff</RootNamespace>
 		<AssemblyName>NoP77svk.JsonDiff</AssemblyName>
-		<PackageId>NoP77svk.JsonDiff</PackageId>
 
+		<PackageId>NoP77svk.JsonDiff</PackageId>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageIcon>jsondiff.icon.png</PackageIcon>
-		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+		<PackageLicenseExpression>CC-BY-SA-4.0</PackageLicenseExpression>
+		<PackageTags>json;diff;comparison;library;netstandard</PackageTags>
+		<PackageType>Library</PackageType>
+		
+		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/nop77svk/dotnet.json-diff</RepositoryUrl>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
