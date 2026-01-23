@@ -237,3 +237,15 @@ public class JsonNodeComparer : JsonComparer<JsonNode?>
     {
     }
 }
+
+public enum MatchJsonArrayElementsBy
+{
+    Position,
+    Key
+}
+
+public enum MatchJsonObjectPropertiesBy
+{
+    Name,
+    Position
+}
