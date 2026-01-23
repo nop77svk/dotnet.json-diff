@@ -1,7 +1,5 @@
 namespace NoP77svk.JsonDiff;
 
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 
 public sealed class JsonElementDiffValuesSelector : IJsonDiffNodeValuesSelector<JsonElement>

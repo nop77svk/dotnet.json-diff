@@ -1,8 +1,5 @@
 namespace NoP77svk.JsonDiff;
 
-using System.Collections.Generic;
-using System.Linq;
-
 public interface IJsonDiffFormatter<TNode>
 {
     string DiffMessageFormatter(JsonDifference<TNode> difference);
