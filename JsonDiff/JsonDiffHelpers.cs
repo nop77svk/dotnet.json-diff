@@ -13,10 +13,7 @@ internal static class JsonDiffHelpers
     }
 
     public static string JsonPathCombineWithArrayKey(string jsonPath, string key)
-    {
-        string sanitisedPropertyName = SanitisePropertyName(key);
-        return $"{jsonPath}[{sanitisedPropertyName}]";
-    }
+        => $"{jsonPath}[{key}]";
 
     public static string JsonPathCombineWithArrayIndex(string jsonPath, int index)
         => $"{jsonPath}[{index}]";

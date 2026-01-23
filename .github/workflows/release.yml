@@ -42,65 +42,27 @@ jobs:
           --store-password-in-clear-text \
           --source 'https://nuget.pkg.github.com/nop77svk/index.json'
     - name: Solution clean
-      run: dotnet clean -c Release
+      run: |
+        rm -rfv */bin */obj && rm -rfv */bin */obj
     - name: NuGet restore
       run: dotnet restore
     - name: Build
       run: dotnet build -c Release --no-restore
     - name: Test
       run: dotnet test -c Release --no-build
-    - name: Prepare releases
-      run: |
-        mkdir _publish.all
-    - name: Windows x64 Build
-      run: |
-        dotnet publish ./wtwd.cli/wtwd.cli.csproj \
-            -c Release \
-            -o ./_publish.win-x64 \
-            -r win-x64 \
-            --self-contained \
-            --no-restore \
-            -p:UseAppHost=true
-        cd ./_publish.win-x64
-        cp ../LICENSE .
-        zip -r9v ../_publish.all/wtwd.${VERSION}.win.x64.zip .
-        cd ..
-    - name: Linux x64 Build
-      run: |
-        dotnet publish ./wtwd.cli/wtwd.cli.csproj \
-            -c Release \
-            -o ./_publish.linux-x64 \
-            -r linux-x64 \
-            --self-contained \
-            --no-restore \
-            -p:UseAppHost=true
-        cd ./_publish.linux-x64
-        cp ../LICENSE .
-        zip -r9v ../_publish.all/wtwd.${VERSION}.linux.x64.zip .
-        cd ..
-    - name: Portable Build
-      run: |
-        dotnet publish ./wtwd.cli/wtwd.cli.csproj \
-            -c Release \
-            -o ./_publish.portable \
-            -r win-x64 \
-            --no-self-contained \
-            -p:PublishTrimmed=false \
-            --no-restore \
-            -p:UseAppHost=true
-        cd ./_publish.portable
-        cp ../LICENSE .
-        zip -r9v ../_publish.all/wtwd.${VERSION}.portable.zip .
-        cd ..
-    - name: Release All Builds
-      uses: softprops/action-gh-release@v1
-      if: github.ref_type == 'tag'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        token: "${{ secrets.GITHUB_TOKEN }}"
-        body_path: ${{ github.workspace }}-CHANGELOG.txt
-        repository: nop77svk/wtwd
-        prerelease: false
-        files: |
-          ./_publish.all/*.zip
+    - name: Pack NuGet package
+      run: dotnet pack -c Release --no-build -p:PackageVersion=${VERSION} -o ./nupkg
+    - name: Push to NuGet Gallery
+      run: dotnet nuget push ./nupkg/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+#    - name: Release to GitHub releases
+#      uses: softprops/action-gh-release@v1
+#      if: github.ref_type == 'tag'
+#      env:
+#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#      with:
+#        token: "${{ secrets.GITHUB_TOKEN }}"
+#        body_path: ${{ github.workspace }}-CHANGELOG.txt
+#        repository: nop77svk/wtwd
+#        prerelease: false
+#        files: |
+#          ./_publish.all/*.zip
