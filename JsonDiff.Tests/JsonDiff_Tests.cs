@@ -34,7 +34,9 @@ public class JsonDiff_Tests
     {
         AllowTrailingCommas = true,
         CommentHandling = JsonCommentHandling.Skip,
+#if NET10_0_OR_GREATER
         AllowDuplicateProperties = true,
+#endif
         MaxDepth = 20
     };
 
