@@ -11,9 +11,17 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<Compile Include="..\JsonDiff.Core\IsExternalInit.cs" Link="IsExternalInit.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<None Update="$(ProjectDir)/*_Data/**/*">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\JsonDiff.Core\JsonDiff.Core.csproj" />
 	</ItemGroup>
 
 </Project>
