@@ -30,6 +30,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\JsonDiff.Core\JsonDiff.Core.csproj" />
+		<ProjectReference Include="..\JsonDiff.SystemTextJson\JsonDiff.SystemTextJson.csproj" />
 		<ProjectReference Include="..\JsonDiff\JsonDiff.Core.csproj" />
 	</ItemGroup>
 

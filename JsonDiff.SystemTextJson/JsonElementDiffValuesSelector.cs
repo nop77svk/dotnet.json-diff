@@ -5,6 +5,11 @@ using System.Text.Json;
 public sealed class JsonElementDiffValuesSelector : IJsonDiffNodeValuesSelector<JsonElement>
 {
     /// <summary>
+    /// Gets a singleton instance of <see cref="JsonElementDiffValuesSelector"/> with no customizations.
+    /// </summary>
+    public static JsonElementDiffValuesSelector DefaultInstance { get; } = new JsonElementDiffValuesSelector();
+
+    /// <summary>
     /// Gets/inits (optional) customizable delegate to calculate the key of the array element at the given index from the given node.
     /// </summary>
     public Func<int, JsonElement, string>? ArrayElementDescriptorSelector { get; init; } = null;
@@ -13,12 +18,9 @@ public sealed class JsonElementDiffValuesSelector : IJsonDiffNodeValuesSelector<
     {
     }
 
-    /// <summary>
-    /// Gets a singleton instance of <see cref="JsonElementDiffValuesSelector"/> with no customizations.
-    /// </summary>
-    public static JsonElementDiffValuesSelector DefaultInstance { get; } = new JsonElementDiffValuesSelector();
+    public JsonDiffValueKind GetValueKind(JsonElement node) => Helpers.ToInternalValueKind(node.ValueKind);
 
-    public JsonValueKind GetValueKind(JsonElement node) => node.ValueKind;
+    public bool GetBooleanValue(JsonElement node) => node.GetBoolean();
 
     public string GetStringValue(JsonElement node) => node.GetString() ?? string.Empty;
 
