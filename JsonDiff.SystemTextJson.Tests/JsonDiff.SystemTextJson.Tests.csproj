@@ -5,9 +5,8 @@
 		<OutputType>Library</OutputType>
 		<IsPackable>false</IsPackable>
 
-		<RootNamespace>NoP77svk.JsonDiff.Tests</RootNamespace>
-		<AssemblyName>NoP77svk.JsonDiff.Tests</AssemblyName>
-		<PackageId>NoP77svk.JsonDiff.Tests</PackageId>
+		<RootNamespace>NoP77svk.JsonDiff.SystemTextJson.Tests</RootNamespace>
+		<AssemblyName>NoP77svk.JsonDiff.SystemTextJson.Tests</AssemblyName>
 		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 	</PropertyGroup>
 
@@ -32,7 +31,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\JsonDiff.Core\JsonDiff.Core.csproj" />
 		<ProjectReference Include="..\JsonDiff.SystemTextJson\JsonDiff.SystemTextJson.csproj" />
-		<ProjectReference Include="..\JsonDiff\JsonDiff.Core.csproj" />
 	</ItemGroup>
 
 </Project>
