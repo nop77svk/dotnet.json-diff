@@ -1,0 +1,690 @@
+{
+  "hospital_management_system": {
+    "hospital_info": {
+      "name": "Central Medical Center",
+      "specialties": ["Cardiology", "Oncology", "Neurology", "Orthopedics", "Pediatrics"],
+      "accreditation": ["Joint Commission", "DNV", "CARF"],
+      "location": {
+        "address": {
+          "street": "1000 Health Drive",
+          "zip": "62701",
+          "city": "Springfield",
+          "state": "IL",
+          "coordinates": {
+            "longitude": -89.6501,
+            "latitude": 39.7817
+          }
+        }
+      }
+    },
+    "departments": [
+      {
+        "dept_id": "CARD-001",
+        "beds": 50,
+        "name": "Cardiology",
+        "floor": 4,
+        "head_physician": {
+          "id": "DOC-4001",
+          "name": "Dr. Sarah Mitchell",
+          "credentials": ["MD", "FACC"],
+          "contact": {
+            "email": "s.mitchell@centralmed.org",
+            "office": "Suite 401",
+            "phone": "555-0401"
+          },
+          "specialization": {
+            "primary": "Interventional Cardiology",
+            "subspecialties": ["Structural Heart Disease", "Advanced Heart Failure"]
+          }
+        },
+        "staff": [
+          {
+            "id": "DOC-4002",
+            "name": "Dr. Michael Chen",
+            "credentials": ["MD", "PhD"],
+            "role": "Attending Physician",
+            "shift_schedule": {
+              "tuesday": {"start": "08:00", "end": "17:00"},
+              "monday": {"start": "08:00", "end": "17:00"},
+              "wednesday": {"start": "08:00", "end": "17:00"},
+              "thursday": {"start": "08:00", "end": "17:00"},
+              "friday": {"start": "08:00", "end": "17:00"}
+            },
+            "specialization": {
+              "primary": "Electrophysiology",
+              "subspecialties": ["Arrhythmia Management", "Device Implantation"]
+            }
+          },
+          {
+            "id": "NRS-4001",
+            "name": "Jennifer Lopez",
+            "role": "Head Nurse",
+            "credentials": ["RN", "BSN", "CCRN"],
+            "certifications": ["ACLS", "BLS", "PALS"],
+            "shift_schedule": {
+              "monday": {"start": "07:00", "end": "19:00"},
+              "wednesday": {"start": "07:00", "end": "19:00"},
+              "friday": {"start": "07:00", "end": "19:00"}
+            }
+          }
+        ],
+        "equipment": [
+          {
+            "id": "EQ-CARD-001",
+            "name": "Cardiac Catheterization Lab",
+            "type": "Diagnostic Equipment",
+            "maintenance": {
+              "last_serviced": "2026-01-10",
+              "warranty_expires": "2029-01-10",
+              "next_service": "2026-04-10"
+            },
+            "manufacturer": {
+              "name": "Siemens Healthineers",
+              "model": "Artis zee",
+              "year": 2024
+            }
+          },
+          {
+            "id": "EQ-CARD-002",
+            "name": "Echocardiography Machine",
+            "type": "Imaging Equipment",
+            "manufacturer": {
+              "name": "GE Healthcare",
+              "model": "Vivid E95",
+              "year": 2025
+            },
+            "maintenance": {
+              "last_serviced": "2026-01-05",
+              "next_service": "2026-07-05",
+              "warranty_expires": "2028-01-05"
+            }
+          }
+        ]
+      },
+      {
+        "dept_id": "ONCO-001",
+        "name": "Oncology",
+        "floor": 5,
+        "beds": 40,
+        "head_physician": {
+          "id": "DOC-5001",
+          "name": "Dr. Robert Taylor",
+          "credentials": ["MD", "FASCO"],
+          "specialization": {
+            "primary": "Medical Oncology",
+            "subspecialties": ["Breast Cancer", "Lung Cancer", "Immunotherapy"]
+          },
+          "contact": {
+            "office": "Suite 501",
+            "phone": "555-0501",
+            "email": "r.taylor@centralmed.org"
+          }
+        },
+        "staff": [
+          {
+            "id": "DOC-5002",
+            "name": "Dr. Lisa Anderson",
+            "role": "Attending Physician",
+            "credentials": ["MD", "FACRO"],
+            "specialization": {
+              "primary": "Radiation Oncology",
+              "subspecialties": ["IMRT", "Stereotactic Radiosurgery"]
+            },
+            "shift_schedule": {
+              "monday": {"start": "09:00", "end": "18:00"},
+              "tuesday": {"start": "09:00", "end": "18:00"},
+              "wednesday": {"start": "09:00", "end": "18:00"},
+              "thursday": {"start": "09:00", "end": "18:00"}
+            }
+          },
+          {
+            "id": "NRS-5001",
+            "name": "Maria Garcia",
+            "role": "Oncology Nurse Specialist",
+            "credentials": ["RN", "MSN", "OCN"],
+            "certifications": ["Chemotherapy Administration", "Palliative Care"],
+            "shift_schedule": {
+              "tuesday": {"start": "07:00", "end": "19:00"},
+              "thursday": {"start": "07:00", "end": "19:00"},
+              "saturday": {"start": "07:00", "end": "19:00"}
+            }
+          }
+        ],
+        "equipment": [
+          {
+            "id": "EQ-ONCO-001",
+            "name": "Linear Accelerator",
+            "type": "Radiation Therapy",
+            "manufacturer": {
+              "name": "Varian Medical Systems",
+              "model": "TrueBeam",
+              "year": 2023
+            },
+            "maintenance": {
+              "last_serviced": "2026-01-15",
+              "next_service": "2026-04-15",
+              "warranty_expires": "2028-01-15"
+            }
+          }
+        ]
+      },
+      {
+        "dept_id": "NEURO-001",
+        "name": "Neurology",
+        "floor": 3,
+        "beds": 35,
+        "head_physician": {
+          "id": "DOC-3001",
+          "name": "Dr. James Wilson",
+          "credentials": ["MD", "PhD", "FAAN"],
+          "specialization": {
+            "primary": "Neurosurgery",
+            "subspecialties": ["Spine Surgery", "Brain Tumors", "Epilepsy Surgery"]
+          },
+          "contact": {
+            "office": "Suite 301",
+            "phone": "555-0301",
+            "email": "j.wilson@centralmed.org"
+          }
+        },
+        "staff": [
+          {
+            "id": "DOC-3002",
+            "name": "Dr. Emily Davis",
+            "role": "Attending Physician",
+            "credentials": ["MD", "FAAN"],
+            "specialization": {
+              "primary": "Stroke Neurology",
+              "subspecialties": ["Acute Stroke Intervention", "Vascular Neurology"]
+            },
+            "shift_schedule": {
+              "monday": {"start": "07:00", "end": "16:00"},
+              "tuesday": {"start": "07:00", "end": "16:00"},
+              "wednesday": {"start": "07:00", "end": "16:00"},
+              "thursday": {"start": "07:00", "end": "16:00"},
+              "friday": {"start": "07:00", "end": "16:00"}
+            }
+          }
+        ],
+        "equipment": [
+          {
+            "id": "EQ-NEURO-001",
+            "name": "MRI Scanner 3T",
+            "type": "Imaging Equipment",
+            "manufacturer": {
+              "name": "Philips Healthcare",
+              "model": "Ingenia Elition X",
+              "year": 2024
+            },
+            "maintenance": {
+              "last_serviced": "2026-01-08",
+              "next_service": "2026-07-08",
+              "warranty_expires": "2029-01-08"
+            }
+          },
+          {
+            "id": "EQ-NEURO-002",
+            "name": "EEG Machine",
+            "type": "Diagnostic Equipment",
+            "manufacturer": {
+              "name": "Natus Medical",
+              "model": "Quantum LTM",
+              "year": 2025
+            },
+            "maintenance": {
+              "last_serviced": "2025-12-20",
+              "next_service": "2026-06-20",
+              "warranty_expires": "2028-12-20"
+            }
+          }
+        ]
+      }
+    ],
+    "patients": [
+      {
+        "patient_id": "PAT-10001",
+        "personal_info": {
+          "name": {
+            "first": "John",
+            "middle": "Robert",
+            "last": "Smith"
+          },
+          "gender": "Male",
+          "date_of_birth": "1965-05-15",
+          "emergency_contact": {
+            "name": "Mary Smith",
+            "relationship": "Spouse",
+            "phone": "555-1002"
+          },
+          "contact": {
+            "phone": "555-1001",
+            "email": "j.smith@email.com",
+            "address": {
+              "street": "123 Oak Street",
+              "city": "Springfield",
+              "state": "IL",
+              "zip": "62702"
+            }
+          }
+        },
+        "insurance": {
+          "provider": "BlueCross BlueShield",
+          "policy_number": "BC123456789",
+          "group_number": "GRP-001",
+          "coverage_type": "PPO"
+        },
+        "medical_record": {
+          "blood_type": "O+",
+          "chronic_conditions": ["Hypertension", "Type 2 Diabetes"],
+          "allergies": ["Penicillin", "Latex"],
+          "current_medications": [
+            {
+              "name": "Lisinopril",
+              "frequency": "Once daily",
+              "dosage": "10mg",
+              "prescribing_physician": "DOC-4001"
+            },
+            {
+              "name": "Metformin",
+              "dosage": "500mg",
+              "frequency": "Twice daily",
+              "prescribing_physician": "DOC-4001"
+            }
+          ],
+          "admission_history": [
+            {
+              "admission_id": "ADM-10001-001",
+              "date": "2026-01-10",
+              "department": "CARD-001",
+              "reason": "Chest Pain",
+              "attending_physician": "DOC-4001",
+              "diagnosis": {
+                "primary": "Acute Coronary Syndrome",
+                "secondary": ["Hypertension", "Diabetes Mellitus Type 2"]
+              },
+              "procedures": [
+                {
+                  "name": "Coronary Angiography",
+                  "date": "2026-01-11",
+                  "performed_by": "DOC-4001",
+                  "results": {
+                    "findings": "70% stenosis in LAD",
+                    "intervention": "Drug-Eluting Stent Placement"
+                  }
+                }
+              ],
+              "lab_results": [
+                {
+                  "test": "Troponin I",
+                  "value": 2.5,
+                  "date": "2026-01-10",
+                  "unit": "ng/mL",
+                  "status": "Abnormal",
+                  "reference_range": {
+                    "min": 0,
+                    "max": 0.04
+                  }
+                },
+                {
+                  "test": "CK-MB",
+                  "date": "2026-01-10",
+                  "value": 25,
+                  "unit": "ng/mL",
+                  "reference_range": {
+                    "min": 0,
+                    "max": 5
+                  },
+                  "status": "Abnormal"
+                }
+              ],
+              "discharge_info": {
+                "date": "2026-01-15",
+                "status": "Stable",
+                "follow_up": {
+                  "physician": "DOC-4001",
+                  "date": "2026-02-01",
+                  "instructions": "Continue medications, cardiac rehab, low sodium diet"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "patient_id": "PAT-10002",
+        "personal_info": {
+          "name": {
+            "first": "Sarah",
+            "middle": "Ann",
+            "last": "Johnson"
+          },
+          "date_of_birth": "1978-09-22",
+          "gender": "Female",
+          "contact": {
+            "phone": "555-2001",
+            "email": "s.johnson@email.com",
+            "address": {
+              "street": "456 Elm Avenue",
+              "city": "Springfield",
+              "state": "IL",
+              "zip": "62703"
+            }
+          },
+          "emergency_contact": {
+            "name": "David Johnson",
+            "relationship": "Spouse",
+            "phone": "555-2002"
+          }
+        },
+        "medical_record": {
+          "blood_type": "A+",
+          "allergies": ["Sulfa drugs"],
+          "chronic_conditions": ["Breast Cancer"],
+          "current_medications": [
+            {
+              "name": "Tamoxifen",
+              "dosage": "20mg",
+              "frequency": "Once daily",
+              "prescribing_physician": "DOC-5001"
+            }
+          ],
+          "admission_history": [
+            {
+              "admission_id": "ADM-10002-001",
+              "date": "2026-01-05",
+              "department": "ONCO-001",
+              "reason": "Chemotherapy Treatment",
+              "attending_physician": "DOC-5001",
+              "diagnosis": {
+                "primary": "Invasive Ductal Carcinoma, Stage IIA",
+                "secondary": []
+              },
+              "procedures": [
+                {
+                  "name": "Chemotherapy Infusion",
+                  "date": "2026-01-05",
+                  "performed_by": "NRS-5001",
+                  "results": {
+                    "regimen": "AC-T Protocol",
+                    "cycle": "3 of 6",
+                    "tolerance": "Good, mild nausea managed with antiemetics"
+                  }
+                }
+              ],
+              "lab_results": [
+                {
+                  "test": "Complete Blood Count",
+                  "date": "2026-01-05",
+                  "components": {
+                    "WBC": {
+                      "value": 4.2,
+                      "unit": "K/uL",
+                      "reference_range": {"min": 4.5, "max": 11.0},
+                      "status": "Low Normal"
+                    },
+                    "Hemoglobin": {
+                      "value": 11.5,
+                      "unit": "g/dL",
+                      "reference_range": {"min": 12.0, "max": 16.0},
+                      "status": "Low"
+                    }
+                  }
+                }
+              ],
+              "discharge_info": {
+                "date": "2026-01-05",
+                "status": "Discharged Same Day",
+                "follow_up": {
+                  "physician": "DOC-5001",
+                  "date": "2026-01-26",
+                  "instructions": "Monitor for side effects, next chemo cycle in 3 weeks"
+                }
+              }
+            }
+          ]
+        },
+        "insurance": {
+          "provider": "Aetna",
+          "policy_number": "AET987654321",
+          "group_number": "GRP-002",
+          "coverage_type": "HMO"
+        }
+      },
+      {
+        "patient_id": "PAT-10003",
+        "personal_info": {
+          "name": {
+            "first": "Michael",
+            "middle": "James",
+            "last": "Brown"
+          },
+          "date_of_birth": "1952-03-08",
+          "gender": "Male",
+          "contact": {
+            "phone": "555-3001",
+            "email": "m.brown@email.com",
+            "address": {
+              "street": "789 Maple Drive",
+              "city": "Springfield",
+              "state": "IL",
+              "zip": "62704"
+            }
+          },
+          "emergency_contact": {
+            "name": "Patricia Brown",
+            "relationship": "Spouse",
+            "phone": "555-3002"
+          }
+        },
+        "medical_record": {
+          "blood_type": "B-",
+          "allergies": ["None Known"],
+          "chronic_conditions": ["Parkinson's Disease", "Hypertension"],
+          "current_medications": [
+            {
+              "name": "Carbidopa-Levodopa",
+              "dosage": "25-100mg",
+              "frequency": "Three times daily",
+              "prescribing_physician": "DOC-3002"
+            },
+            {
+              "name": "Amlodipine",
+              "dosage": "5mg",
+              "frequency": "Once daily",
+              "prescribing_physician": "DOC-3002"
+            }
+          ],
+          "admission_history": [
+            {
+              "admission_id": "ADM-10003-001",
+              "date": "2026-01-12",
+              "department": "NEURO-001",
+              "reason": "Stroke Evaluation",
+              "attending_physician": "DOC-3002",
+              "diagnosis": {
+                "primary": "Transient Ischemic Attack (TIA)",
+                "secondary": ["Parkinson's Disease", "Hypertension"]
+              },
+              "procedures": [
+                {
+                  "name": "MRI Brain",
+                  "date": "2026-01-12",
+                  "performed_by": "Radiology Team",
+                  "results": {
+                    "findings": "No acute infarct, chronic microvascular changes",
+                    "radiologist": "Dr. Susan Martinez"
+                  }
+                },
+                {
+                  "name": "Carotid Doppler Ultrasound",
+                  "date": "2026-01-13",
+                  "performed_by": "Vascular Tech",
+                  "results": {
+                    "findings": "Mild plaque in bilateral carotid arteries, no significant stenosis",
+                    "radiologist": "Dr. Susan Martinez"
+                  }
+                }
+              ],
+              "lab_results": [
+                {
+                  "test": "Lipid Panel",
+                  "date": "2026-01-12",
+                  "components": {
+                    "Total Cholesterol": {
+                      "value": 220,
+                      "unit": "mg/dL",
+                      "reference_range": {"min": 0, "max": 200},
+                      "status": "High"
+                    },
+                    "LDL": {
+                      "value": 140,
+                      "unit": "mg/dL",
+                      "reference_range": {"min": 0, "max": 100},
+                      "status": "High"
+                    },
+                    "HDL": {
+                      "value": 45,
+                      "unit": "mg/dL",
+                      "reference_range": {"min": 40, "max": 60},
+                      "status": "Normal"
+                    }
+                  }
+                }
+              ],
+              "discharge_info": {
+                "date": "2026-01-14",
+                "status": "Improved",
+                "follow_up": {
+                  "physician": "DOC-3002",
+                  "date": "2026-02-14",
+                  "instructions": "Start statin therapy, continue current medications, lifestyle modifications"
+                }
+              }
+            }
+          ]
+        },
+        "insurance": {
+          "provider": "Medicare",
+          "policy_number": "MED-123-45-6789A",
+          "group_number": "N/A",
+          "coverage_type": "Traditional Medicare with Supplement"
+        }
+      }
+    ],
+    "billing": [
+      {
+        "invoice_id": "INV-10001",
+        "patient_id": "PAT-10001",
+        "admission_id": "ADM-10001-001",
+        "date_generated": "2026-01-16",
+        "items": [
+          {
+            "description": "Room and Board - Semi-Private",
+            "quantity": 5,
+            "total": 7500.00,
+            "unit_price": 1500.00
+          },
+          {
+            "description": "Coronary Angiography",
+            "quantity": 1,
+            "unit_price": 8500.00,
+            "total": 8500.00
+          },
+          {
+            "description": "Stent Placement",
+            "quantity": 1,
+            "unit_price": 12000.00,
+            "total": 12000.00
+          },
+          {
+            "description": "Laboratory Tests",
+            "quantity": 1,
+            "unit_price": 850.00,
+            "total": 850.00
+          },
+          {
+            "description": "Medications",
+            "quantity": 1,
+            "unit_price": 450.00,
+            "total": 450.00
+          }
+        ],
+        "subtotal": 29300.00,
+        "insurance_payment": 23440.00,
+        "status": "Pending Payment",
+        "patient_responsibility": 5860.00
+      },
+      {
+        "invoice_id": "INV-10002",
+        "patient_id": "PAT-10002",
+        "admission_id": "ADM-10002-001",
+        "date_generated": "2026-01-06",
+        "items": [
+          {
+            "description": "Chemotherapy Infusion",
+            "quantity": 1,
+            "unit_price": 6500.00,
+            "total": 6500.00
+          },
+          {
+            "description": "Oncology Consultation",
+            "quantity": 1,
+            "unit_price": 350.00,
+            "total": 350.00
+          },
+          {
+            "description": "Laboratory Tests",
+            "quantity": 1,
+            "unit_price": 425.00,
+            "total": 425.00
+          },
+          {
+            "description": "Medications (Antiemetics)",
+            "quantity": 1,
+            "unit_price": 125.00,
+            "total": 125.00
+          }
+        ],
+        "subtotal": 7400.00,
+        "insurance_payment": 6660.00,
+        "patient_responsibility": 740.00,
+        "status": "Paid"
+      }
+    ],
+    "appointments": [
+      {
+        "appointment_id": "APPT-001",
+        "patient_id": "PAT-10001",
+        "physician_id": "DOC-4001",
+        "time": "10:00",
+        "department": "CARD-001",
+        "date": "2026-02-01",
+        "type": "Follow-up",
+        "status": "Scheduled",
+        "notes": "Post-procedure cardiac assessment"
+      },
+      {
+        "appointment_id": "APPT-002",
+        "patient_id": "PAT-10002",
+        "physician_id": "DOC-5001",
+        "department": "ONCO-001",
+        "date": "2026-01-26",
+        "time": "14:00",
+        "type": "Chemotherapy",
+        "status": "Scheduled",
+        "notes": "Cycle 4 of 6"
+      },
+      {
+        "appointment_id": "APPT-003",
+        "patient_id": "PAT-10003",
+        "physician_id": "DOC-3002",
+        "department": "NEURO-001",
+        "date": "2026-02-14",
+        "time": "09:30",
+        "type": "Follow-up",
+        "status": "Scheduled",
+        "notes": "TIA follow-up, review lipid management"
+      }
+    ]
+  }
+}
