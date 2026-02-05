@@ -1,0 +1,741 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "type": "employee_database",
+    "generated": "2026-01-21"
+  },
+  "departments": [
+    {
+      "id": 1,
+      "name": "Engineering",
+      "location": {
+        "building": "A",
+        "address": {
+          "street": "123 Tech Lane",
+          "state": "CA",
+          "city": "San Francisco",
+          "coordinates": {
+            "longitude": -122.4194,
+            "latitude": 37.7749
+          }
+        },
+        "floor": 3
+      },
+      "employees": [
+        {
+          "id": 1001,
+          "position": "Senior Developer",
+          "name": "Alice Johnson",
+          "skills": ["C#", "Python", "JavaScript", "Docker", "Kubernetes"],
+          "projects": [
+            {
+              "name": "Project Alpha",
+              "role": "Lead Developer",
+              "timeline": {
+                "start": "2025-01-15",
+                "end": "2025-06-30",
+                "milestones": [
+                  {"name": "Design", "date": "2025-02-01", "status": "completed"},
+                  {"name": "Development", "date": "2025-04-15", "status": "in_progress"},
+                  {"name": "Testing", "date": "2025-06-01", "status": "pending"}
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": 1002,
+          "name": "Bob Smith",
+          "position": "DevOps Engineer",
+          "skills": ["AWS", "Terraform", "Jenkins", "Python", "Bash"],
+          "projects": [
+            {
+              "name": "Infrastructure Upgrade",
+              "role": "DevOps Lead",
+              "timeline": {
+                "start": "2025-02-01",
+                "end": "2025-08-31",
+                "milestones": [
+                  {"name": "Planning", "date": "2025-02-15", "status": "completed"},
+                  {"name": "Implementation", "date": "2025-05-01", "status": "in_progress"},
+                  {"name": "Migration", "date": "2025-07-15", "status": "pending"}
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": 1003,
+          "name": "Carol White",
+          "position": "Frontend Developer",
+          "skills": ["React", "TypeScript", "CSS", "HTML", "Redux"],
+          "projects": [
+            {
+              "name": "UI Redesign",
+              "role": "Frontend Lead",
+              "timeline": {
+                "start": "2025-03-01",
+                "end": "2025-09-30",
+                "milestones": [
+                  {"name": "Research", "date": "2025-03-15", "status": "completed"},
+                  {"name": "Prototyping", "date": "2025-05-01", "status": "in_progress"},
+                  {"name": "Launch", "date": "2025-09-01", "status": "pending"}
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": 1004,
+          "name": "David Brown",
+          "position": "Backend Developer",
+          "skills": [".NET", "SQL Server", "Azure", "Redis", "RabbitMQ"],
+          "projects": [
+            {
+              "role": "Backend Developer",
+              "name": "API Gateway",
+              "timeline": {
+                "start": "2025-01-01",
+                "end": "2025-07-31",
+                "milestones": [
+                  {"name": "Architecture", "date": "2025-01-20", "status": "completed"},
+                  {"name": "Development", "date": "2025-04-30", "status": "in_progress"},
+                  {"name": "Deployment", "date": "2025-07-15", "status": "pending"}
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": 1005,
+          "name": "Emma Davis",
+          "position": "QA Engineer",
+          "skills": ["Selenium", "JUnit", "Python", "API Testing", "CI/CD"],
+          "projects": [
+            {
+              "name": "Test Automation",
+              "timeline": {
+                "start": "2025-02-15",
+                "end": "2025-08-15",
+                "milestones": [
+                  {"name": "Framework Setup", "date": "2025-03-01", "status": "completed"},
+                  {"name": "Test Creation", "date": "2025-06-01", "status": "in_progress"},
+                  {"name": "Integration", "date": "2025-08-01", "status": "pending"}
+                ]
+              },
+              "role": "QA Lead"
+            }
+          ]
+        },
+        {
+          "id": 1006,
+          "name": "Frank Wilson",
+          "position": "Security Engineer",
+          "skills": ["Penetration Testing", "OWASP", "Network Security", "Cryptography", "Python"],
+          "projects": [
+            {
+              "name": "Security Audit",
+              "role": "Security Lead",
+              "timeline": {
+                "end": "2025-12-31",
+                "start": "2025-01-10",
+                "milestones": [
+                  {"name": "Assessment", "date": "2025-02-28", "status": "completed"},
+                  {"name": "Remediation", "date": "2025-08-31", "status": "in_progress"},
+                  {"name": "Verification", "date": "2025-12-15", "status": "pending"}
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": 1007,
+          "name": "Grace Lee",
+          "position": "Data Engineer",
+          "skills": ["Spark", "Hadoop", "Python", "SQL", "Airflow"],
+          "projects": [
+            {
+              "name": "Data Pipeline",
+              "role": "Data Lead",
+              "timeline": {
+                "start": "2025-03-15",
+                "end": "2025-10-31",
+                "milestones": [
+                  {"name": "Design", "date": "2025-04-01", "status": "in_progress"},
+                  {"name": "Implementation", "date": "2025-07-15", "status": "pending"},
+                  {"name": "Optimization", "date": "2025-10-01", "status": "pending"}
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": 1008,
+          "name": "Henry Martinez",
+          "position": "Mobile Developer",
+          "skills": ["Swift", "Kotlin", "React Native", "Firebase", "Mobile UI"],
+          "projects": [
+            {
+              "name": "Mobile App v2",
+              "role": "Mobile Lead",
+              "timeline": {
+                "start": "2025-02-01",
+                "end": "2025-09-30",
+                "milestones": [
+                  {"name": "Planning", "date": "2025-02-20", "status": "completed"},
+                  {"name": "Development", "date": "2025-06-30", "status": "in_progress"},
+                  {"name": "Release", "date": "2025-09-15", "status": "pending"}
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": 1009,
+          "name": "Iris Garcia",
+          "position": "Full Stack Developer",
+          "skills": ["Node.js", "React", "MongoDB", "Express", "GraphQL"],
+          "projects": [
+            {
+              "name": "Customer Portal",
+              "role": "Full Stack Developer",
+              "timeline": {
+                "start": "2025-01-20",
+                "end": "2025-08-20",
+                "milestones": [
+                  {"name": "Backend", "date": "2025-04-01", "status": "in_progress"},
+                  {"name": "Frontend", "date": "2025-06-15", "status": "pending"},
+                  {"name": "Launch", "date": "2025-08-10", "status": "pending"}
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": 1010,
+          "name": "Jack Robinson",
+          "position": "Database Administrator",
+          "skills": ["PostgreSQL", "MySQL", "Oracle", "Database Optimization", "Backup"],
+          "projects": [
+            {
+              "name": "Database Migration",
+              "role": "DBA Lead",
+              "timeline": {
+                "start": "2025-03-01",
+                "end": "2025-11-30",
+                "milestones": [
+                  {"name": "Analysis", "date": "2025-04-15", "status": "in_progress"},
+                  {"name": "Migration", "date": "2025-08-31", "status": "pending"},
+                  {"name": "Validation", "date": "2025-11-15", "status": "pending"}
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Marketing",
+      "location": {
+        "building": "B",
+        "floor": 2,
+        "address": {
+          "street": "456 Commerce Blvd",
+          "city": "New York",
+          "state": "NY",
+          "coordinates": {
+            "latitude": 40.7128,
+            "longitude": -74.0060
+          }
+        }
+      },
+      "employees": [
+        {
+          "id": 2001,
+          "name": "Karen Taylor",
+          "position": "Marketing Director",
+          "skills": ["Strategy", "Brand Management", "Digital Marketing", "Analytics", "Leadership"],
+          "projects": [
+            {
+              "name": "Brand Refresh",
+              "role": "Director",
+              "timeline": {
+                "start": "2025-01-01",
+                "end": "2025-12-31",
+                "milestones": [
+                  {"name": "Research", "date": "2025-03-01", "status": "completed"},
+                  {"name": "Design", "date": "2025-06-30", "status": "in_progress"},
+                  {"name": "Launch", "date": "2025-12-01", "status": "pending"}
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": 2002,
+          "name": "Liam Anderson",
+          "position": "Content Manager",
+          "skills": ["Content Strategy", "SEO", "Copywriting", "CMS", "Analytics"],
+          "projects": [
+            {
+              "name": "Content Hub",
+              "role": "Content Lead",
+              "timeline": {
+                "start": "2025-02-01",
+                "end": "2025-10-31",
+                "milestones": [
+                  {"name": "Planning", "date": "2025-03-01", "status": "completed"},
+                  {"name": "Creation", "date": "2025-07-15", "status": "in_progress"},
+                  {"name": "Launch", "date": "2025-10-15", "status": "pending"}
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": 2003,
+          "name": "Mia Thomas",
+          "position": "Social Media Manager",
+          "skills": ["Social Strategy", "Community Management", "Analytics", "Content Creation", "Advertising"],
+          "projects": [
+            {
+              "name": "Social Campaign 2025",
+              "role": "Social Lead",
+              "timeline": {
+                "start": "2025-01-15",
+                "end": "2025-12-15",
+                "milestones": [
+                  {"name": "Q1 Campaign", "date": "2025-03-31", "status": "completed"},
+                  {"name": "Q2 Campaign", "date": "2025-06-30", "status": "in_progress"},
+                  {"name": "Q3 Campaign", "date": "2025-09-30", "status": "pending"}
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": 2004,
+          "name": "Noah Jackson",
+          "position": "Marketing Analyst",
+          "skills": ["Data Analysis", "Google Analytics", "SQL", "Tableau", "A/B Testing"],
+          "projects": [
+            {
+              "name": "Marketing Analytics Platform",
+              "role": "Analyst",
+              "timeline": {
+                "start": "2025-02-15",
+                "end": "2025-09-30",
+                "milestones": [
+                  {"name": "Requirements", "date": "2025-03-15", "status": "completed"},
+                  {"name": "Implementation", "date": "2025-07-01", "status": "in_progress"},
+                  {"name": "Rollout", "date": "2025-09-15", "status": "pending"}
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": 2005,
+          "name": "Olivia Harris",
+          "position": "Brand Manager",
+          "skills": ["Brand Strategy", "Design", "Market Research", "Partnership", "Communication"],
+          "projects": [
+            {
+              "name": "Partnership Program",
+              "role": "Brand Lead",
+              "timeline": {
+                "start": "2025-03-01",
+                "end": "2025-11-30",
+                "milestones": [
+                  {"name": "Partner Identification", "date": "2025-04-30", "status": "in_progress"},
+                  {"name": "Agreements", "date": "2025-08-31", "status": "pending"},
+                  {"name": "Launch", "date": "2025-11-15", "status": "pending"}
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Sales",
+      "location": {
+        "building": "C",
+        "floor": 1,
+        "address": {
+          "street": "789 Enterprise Way",
+          "city": "Chicago",
+          "state": "IL",
+          "coordinates": {
+            "latitude": 41.8781,
+            "longitude": -87.6298
+          }
+        }
+      },
+      "employees": [
+        {
+          "id": 3001,
+          "name": "Peter Clark",
+          "position": "Sales Director",
+          "skills": ["Sales Strategy", "Team Leadership", "CRM", "Negotiation", "Forecasting"],
+          "projects": [
+            {
+              "name": "Sales Expansion 2025",
+              "role": "Director",
+              "timeline": {
+                "start": "2025-01-01",
+                "end": "2025-12-31",
+                "milestones": [
+                  {"name": "Territory Mapping", "date": "2025-02-28", "status": "completed"},
+                  {"name": "Team Building", "date": "2025-06-30", "status": "in_progress"},
+                  {"name": "Revenue Target", "date": "2025-12-20", "status": "pending"}
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": 3002,
+          "name": "Quinn Rodriguez",
+          "position": "Account Executive",
+          "skills": ["B2B Sales", "Relationship Building", "Presentation", "Salesforce", "Contract Negotiation"],
+          "projects": [
+            {
+              "name": "Enterprise Accounts",
+              "role": "Account Lead",
+              "timeline": {
+                "start": "2025-01-15",
+                "end": "2025-12-15",
+                "milestones": [
+                  {"name": "Prospecting", "date": "2025-03-31", "status": "completed"},
+                  {"name": "Demos", "date": "2025-08-31", "status": "in_progress"},
+                  {"name": "Closings", "date": "2025-12-10", "status": "pending"}
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": 3003,
+          "name": "Rachel Lewis",
+          "position": "Sales Engineer",
+          "skills": ["Technical Sales", "Product Demo", "Solution Design", "Customer Support", "Presales"],
+          "projects": [
+            {
+              "name": "Technical Sales Support",
+              "role": "Sales Engineer",
+              "timeline": {
+                "start": "2025-02-01",
+                "end": "2025-12-31",
+                "milestones": [
+                  {"name": "Demo Library", "date": "2025-04-30", "status": "in_progress"},
+                  {"name": "Training", "date": "2025-08-15", "status": "pending"},
+                  {"name": "Review", "date": "2025-12-20", "status": "pending"}
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": 3004,
+          "name": "Samuel Walker",
+          "position": "Inside Sales Rep",
+          "skills": ["Cold Calling", "Lead Qualification", "CRM", "Email Marketing", "Follow-up"],
+          "projects": [
+            {
+              "name": "Inbound Lead Program",
+              "role": "ISR",
+              "timeline": {
+                "start": "2025-01-01",
+                "end": "2025-12-31",
+                "milestones": [
+                  {"name": "Process Setup", "date": "2025-02-15", "status": "completed"},
+                  {"name": "Lead Nurturing", "date": "2025-07-31", "status": "in_progress"},
+                  {"name": "Conversion", "date": "2025-12-15", "status": "pending"}
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": 3005,
+          "name": "Tina Hall",
+          "position": "Customer Success Manager",
+          "skills": ["Account Management", "Customer Retention", "Upselling", "Support", "Analytics"],
+          "projects": [
+            {
+              "name": "Customer Success Initiative",
+              "role": "CSM Lead",
+              "timeline": {
+                "start": "2025-02-01",
+                "end": "2025-12-31",
+                "milestones": [
+                  {"name": "Onboarding", "date": "2025-04-30", "status": "in_progress"},
+                  {"name": "Expansion", "date": "2025-09-30", "status": "pending"},
+                  {"name": "Renewal", "date": "2025-12-20", "status": "pending"}
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Human Resources",
+      "location": {
+        "building": "A",
+        "floor": 1,
+        "address": {
+          "street": "123 Tech Lane",
+          "city": "San Francisco",
+          "state": "CA",
+          "coordinates": {
+            "latitude": 37.7749,
+            "longitude": -122.4194
+          }
+        }
+      },
+      "employees": [
+        {
+          "id": 4001,
+          "name": "Uma Allen",
+          "position": "HR Director",
+          "skills": ["HR Strategy", "Talent Management", "Compensation", "Employee Relations", "Compliance"],
+          "projects": [
+            {
+              "name": "HR Digital Transformation",
+              "role": "HR Director",
+              "timeline": {
+                "start": "2025-01-01",
+                "end": "2025-12-31",
+                "milestones": [
+                  {"name": "System Selection", "date": "2025-03-31", "status": "completed"},
+                  {"name": "Implementation", "date": "2025-09-30", "status": "in_progress"},
+                  {"name": "Go Live", "date": "2025-12-15", "status": "pending"}
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": 4002,
+          "name": "Victor Young",
+          "position": "Recruiter",
+          "skills": ["Recruiting", "Interviewing", "ATS", "Sourcing", "Employer Branding"],
+          "projects": [
+            {
+              "name": "Talent Acquisition 2025",
+              "role": "Lead Recruiter",
+              "timeline": {
+                "start": "2025-01-15",
+                "end": "2025-12-31",
+                "milestones": [
+                  {"name": "Q1 Hiring", "date": "2025-03-31", "status": "completed"},
+                  {"name": "Q2 Hiring", "date": "2025-06-30", "status": "in_progress"},
+                  {"name": "Q3 Hiring", "date": "2025-09-30", "status": "pending"}
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": 4003,
+          "name": "Wendy King",
+          "position": "Benefits Administrator",
+          "skills": ["Benefits Administration", "Compliance", "Vendor Management", "Communication", "Analytics"],
+          "projects": [
+            {
+              "name": "Benefits Review 2025",
+              "role": "Benefits Lead",
+              "timeline": {
+                "start": "2025-02-01",
+                "end": "2025-11-30",
+                "milestones": [
+                  {"name": "Analysis", "date": "2025-04-30", "status": "in_progress"},
+                  {"name": "Selection", "date": "2025-08-31", "status": "pending"},
+                  {"name": "Enrollment", "date": "2025-11-15", "status": "pending"}
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": 4004,
+          "name": "Xavier Wright",
+          "position": "Learning & Development Manager",
+          "skills": ["Training", "LMS", "Curriculum Design", "Coaching", "Leadership Development"],
+          "projects": [
+            {
+              "name": "Leadership Development Program",
+              "role": "L&D Manager",
+              "timeline": {
+                "start": "2025-03-01",
+                "end": "2025-12-31",
+                "milestones": [
+                  {"name": "Design", "date": "2025-05-31", "status": "in_progress"},
+                  {"name": "Pilot", "date": "2025-09-30", "status": "pending"},
+                  {"name": "Rollout", "date": "2025-12-15", "status": "pending"}
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": 4005,
+          "name": "Yara Lopez",
+          "position": "HR Business Partner",
+          "skills": ["Business Partnering", "Employee Relations", "Change Management", "Coaching", "Analytics"],
+          "projects": [
+            {
+              "name": "Organization Development",
+              "role": "HRBP",
+              "timeline": {
+                "start": "2025-01-01",
+                "end": "2025-12-31",
+                "milestones": [
+                  {"name": "Assessment", "date": "2025-03-31", "status": "completed"},
+                  {"name": "Planning", "date": "2025-07-31", "status": "in_progress"},
+                  {"name": "Implementation", "date": "2025-12-15", "status": "pending"}
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Finance",
+      "location": {
+        "building": "B",
+        "floor": 4,
+        "address": {
+          "street": "456 Commerce Blvd",
+          "city": "New York",
+          "state": "NY",
+          "coordinates": {
+            "latitude": 40.7128,
+            "longitude": -74.0060
+          }
+        }
+      },
+      "employees": [
+        {
+          "id": 5001,
+          "name": "Zoe Hill",
+          "position": "CFO",
+          "skills": ["Financial Strategy", "FP&A", "Fundraising", "M&A", "Leadership"],
+          "projects": [
+            {
+              "name": "Financial Planning 2025",
+              "role": "CFO",
+              "timeline": {
+                "start": "2025-01-01",
+                "end": "2025-12-31",
+                "milestones": [
+                  {"name": "Budget", "date": "2025-02-28", "status": "completed"},
+                  {"name": "Q2 Review", "date": "2025-06-30", "status": "in_progress"},
+                  {"name": "Q4 Review", "date": "2025-12-20", "status": "pending"}
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": 5002,
+          "name": "Aaron Scott",
+          "position": "Controller",
+          "skills": ["Accounting", "Financial Reporting", "Compliance", "Audit", "ERP Systems"],
+          "projects": [
+            {
+              "name": "Financial Close Automation",
+              "role": "Controller",
+              "timeline": {
+                "start": "2025-02-01",
+                "end": "2025-10-31",
+                "milestones": [
+                  {"name": "Process Mapping", "date": "2025-03-31", "status": "completed"},
+                  {"name": "System Config", "date": "2025-07-31", "status": "in_progress"},
+                  {"name": "Go Live", "date": "2025-10-15", "status": "pending"}
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": 5003,
+          "name": "Bella Green",
+          "position": "Financial Analyst",
+          "skills": ["Financial Modeling", "Excel", "SQL", "Forecasting", "Reporting"],
+          "projects": [
+            {
+              "name": "Financial Dashboard",
+              "role": "Analyst",
+              "timeline": {
+                "start": "2025-01-15",
+                "end": "2025-08-31",
+                "milestones": [
+                  {"name": "Requirements", "date": "2025-02-28", "status": "completed"},
+                  {"name": "Development", "date": "2025-06-30", "status": "in_progress"},
+                  {"name": "Deployment", "date": "2025-08-15", "status": "pending"}
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": 5004,
+          "name": "Carl Adams",
+          "position": "Accounts Payable Manager",
+          "skills": ["AP Management", "Vendor Relations", "Process Improvement", "ERP", "Reconciliation"],
+          "projects": [
+            {
+              "name": "AP Process Optimization",
+              "role": "AP Manager",
+              "timeline": {
+                "start": "2025-03-01",
+                "end": "2025-11-30",
+                "milestones": [
+                  {"name": "Analysis", "date": "2025-04-30", "status": "in_progress"},
+                  {"name": "Implementation", "date": "2025-09-30", "status": "pending"},
+                  {"name": "Review", "date": "2025-11-15", "status": "pending"}
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": 5005,
+          "name": "Diana Baker",
+          "position": "Tax Manager",
+          "skills": ["Tax Compliance", "Tax Planning", "Research", "IRS Relations", "International Tax"],
+          "projects": [
+            {
+              "name": "Tax Strategy 2025",
+              "role": "Tax Manager",
+              "timeline": {
+                "start": "2025-01-01",
+                "end": "2025-12-31",
+                "milestones": [
+                  {"name": "Q1 Filing", "date": "2025-04-15", "status": "in_progress"},
+                  {"name": "Planning", "date": "2025-08-31", "status": "pending"},
+                  {"name": "Year End", "date": "2025-12-31", "status": "pending"}
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "company_metrics": {
+    "total_employees": 35,
+    "retention_rate": 0.92,
+    "departments_count": 5,
+    "average_tenure_years": 3.5,
+    "satisfaction_score": 4.2
+  }
+}

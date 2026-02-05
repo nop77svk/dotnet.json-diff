@@ -1,5 +1,8 @@
 <Solution>
   <Project Path="JsonDiff.Core/JsonDiff.Core.csproj" />
-  <Project Path="JsonDiff.SystemTextJson/JsonDiff.SystemTextJson.csproj" Id="3dffb6ae-f7ed-4ff4-8bcd-232bd2c69092" />
-  <Project Path="JsonDiff.SystemTextJson.Tests/JsonDiff.SystemTextJson.Tests.csproj" Id="d944a238-2e3e-4ae8-8bde-980ba5c2161d" />
+  <Project Path="JsonDiff.SystemTextJson.JsonNode/JsonDiff.SystemTextJson.JsonNode.csproj" Id="3dffb6ae-f7ed-4ff4-8bcd-232bd2c69092" />
+  <Project Path="JsonDiff.SystemTextJson.JsonNode.Tests/JsonDiff.SystemTextJson.JsonNode.Tests.csproj" Id="d944a238-2e3e-4ae8-8bde-980ba5c2161d" />
+  <Project Path="JsonDiff.SystemTextJson.JsonElement/JsonDiff.SystemTextJson.JsonElement.csproj" />
+  <Project Path="JsonDiff.SystemTextJson.JsonElement.Tests/JsonDiff.SystemTextJson.JsonElement.Tests.csproj" />
+  <Project Path="JsonDiff.Tests/JsonDiff.Tests.csproj" Id="cfe9510d-b10c-43e5-9a56-52cc7da83066" />
 </Solution>
