@@ -22,7 +22,9 @@ public sealed class JsonNodeDiffValuesSelector : IJsonDiffNodeValuesSelector<Jso
     /// </summary>
     public static JsonNodeDiffValuesSelector DefaultInstance { get; } = new JsonNodeDiffValuesSelector();
 
-    public JsonValueKind GetValueKind(JsonNode? node) => node?.GetValueKind() ?? JsonValueKind.Null;
+    public JsonDiffValueKind GetValueKind(JsonNode? node) => node?.GetValueKind().ToInternalValueKind() ?? JsonDiffValueKind.Null;
+
+    public bool GetBooleanValue(JsonNode? node) => node?.GetValue<bool>() ?? false;
 
     public string GetStringValue(JsonNode? node) => node?.GetValue<string>() ?? string.Empty;
 

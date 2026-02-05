@@ -1,10 +1,7 @@
 namespace NoP77svk.JsonDiff.Tests;
 
 using System.Text;
-using System.Text.Json;
 using System.Text.RegularExpressions;
-
-using NUnit.Framework.Interfaces;
 
 internal static class JsonDiff_Data
 {

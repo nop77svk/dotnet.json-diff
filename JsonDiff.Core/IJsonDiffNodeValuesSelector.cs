@@ -1,7 +1,5 @@
 namespace NoP77svk.JsonDiff;
 
-using System.Text.Json;
-
 #pragma warning disable SA1313 // Parameter names should begin with lower-case letter
 public record JsonDiffArrayElementDescriptor<TNode>(int Index, string Key, TNode? ArrayElement);
 #pragma warning restore SA1313
@@ -17,7 +15,7 @@ public interface IJsonDiffNodeValuesSelector<TNode>
     /// </summary>
     /// <param name="node">JSON node</param>
     /// <returns>JSON node value kind</returns>
-    JsonValueKind GetValueKind(TNode? node);
+    JsonDiffValueKind GetValueKind(TNode? node);
 
     /// <summary>
     /// Get the string value represented by the given node (or null if the node is null).
@@ -32,6 +30,8 @@ public interface IJsonDiffNodeValuesSelector<TNode>
     /// <param name="node">JSON node</param>
     /// <returns>Decimal number value of the JSON node (i.e., a property or an array element)</returns>
     decimal GetNumberValue(TNode? node);
+
+    bool GetBooleanValue(TNode? node);
 
     /// <summary>
     /// Enumerate array values from the given node. Each value is represented by its index, (calculated by <see cref="GetArrayElementKey(int, TNode?)"/>) key, and the actual JSON node.
