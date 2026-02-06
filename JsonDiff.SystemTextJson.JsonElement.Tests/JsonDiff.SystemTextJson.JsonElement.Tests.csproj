@@ -1,13 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net10.0;net8.0</TargetFrameworks>
+		<TargetFrameworks>net10.0;net8.0;net6.0</TargetFrameworks>
 		<OutputType>Library</OutputType>
 		<IsPackable>false</IsPackable>
 
 		<RootNamespace>NoP77svk.JsonDiff.SystemTextJson.JsonElement.Tests</RootNamespace>
 		<AssemblyName>NoP77svk.JsonDiff.SystemTextJson.JsonElement.Tests</AssemblyName>
 		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+
+		<SuppressTfmSupportBuildErrors>true</SuppressTfmSupportBuildErrors>
 	</PropertyGroup>
 
 	<ItemGroup>
