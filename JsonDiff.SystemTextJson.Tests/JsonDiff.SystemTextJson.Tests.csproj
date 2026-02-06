@@ -24,7 +24,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\JsonDiff.Core\JsonDiff.Core.csproj" />
-		<ProjectReference Include="..\JsonDiff.SystemTextJson.JsonElement\JsonDiff.SystemTextJson.csproj" />
+		<ProjectReference Include="..\JsonDiff.SystemTextJson\JsonDiff.SystemTextJson.csproj" />
 		<ProjectReference Include="..\JsonDiff.Tests\JsonDiff.Tests.csproj" />
 		<Using Include="NoP77svk.JsonDiff.Tests" />
 	</ItemGroup>
