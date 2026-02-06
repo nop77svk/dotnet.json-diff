@@ -1,6 +1,6 @@
 <Solution>
   <Project Path="JsonDiff.Core/JsonDiff.Core.csproj" />
-  <Project Path="JsonDiff.SystemTextJson.JsonElement.Tests/JsonDiff.SystemTextJson.Tests.csproj" />
-  <Project Path="JsonDiff.SystemTextJson.JsonElement/JsonDiff.SystemTextJson.csproj" />
-  <Project Path="JsonDiff.Tests/JsonDiff.Tests.csproj" Id="cfe9510d-b10c-43e5-9a56-52cc7da83066" />
+  <Project Path="JsonDiff.SystemTextJson/JsonDiff.SystemTextJson.csproj" />
+  <Project Path="JsonDiff.SystemTextJson.Tests/JsonDiff.SystemTextJson.Tests.csproj" />
+  <Project Path="JsonDiff.Tests/JsonDiff.Tests.csproj" />
 </Solution>
