@@ -1,4 +1,4 @@
-namespace NoP77svk.JsonDiff.Tests;
+namespace NoP77svk.JsonDiff.SystemTextJson.Tests;
 
 using System.Text;
 using System.Text.Json;

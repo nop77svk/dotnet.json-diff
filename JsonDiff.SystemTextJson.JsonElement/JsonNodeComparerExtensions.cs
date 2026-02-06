@@ -1,8 +1,9 @@
+#if NET8_0_OR_GREATER
 namespace NoP77svk.JsonDiff;
 
 using System.Text.Json.Nodes;
 
-public static class JsonComparerExtensions
+public static class JsonNodeComparerExtensions
 {
     /// <summary>
     /// Enumerates the differences between two (artbitrary type) JSON documents/nodes.
@@ -17,3 +18,4 @@ public static class JsonComparerExtensions
     public static IEnumerable<JsonDifference<JsonNode?>> CompareWith(this JsonNode? leftNode, JsonNode? rightNode)
         => leftNode.CompareWith(rightNode, JsonNodeDiffValuesSelector.DefaultInstance);
 }
+#endif
