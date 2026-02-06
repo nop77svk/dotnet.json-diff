@@ -22,9 +22,9 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Include="$(ProjectDir)/../_assets/README.md" Pack="true" PackagePath="/" />
-		<None Include="$(ProjectDir)/../_assets/jsondiff.icon.png" Pack="true" PackagePath="/" />
-		<None Include="$(ProjectDir)/../_assets/LICENSE" Pack="true" PackagePath="/" />
+		<None Include="$(ProjectDir)../_assets/README.md" Pack="true" PackagePath="/" />
+		<None Include="$(ProjectDir)../_assets/jsondiff.icon.png" Pack="true" PackagePath="/" />
+		<None Include="$(ProjectDir)../_assets/LICENSE" Pack="true" PackagePath="/" />
 	</ItemGroup>
 
 	<ItemGroup>
