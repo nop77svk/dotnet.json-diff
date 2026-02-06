@@ -2,7 +2,7 @@ namespace NoP77svk.JsonDiff;
 
 using System.Text.Json;
 
-public static class JsonComparerExtensions
+public static class JsonElementComparerExtensions
 {
     /// <summary>
     /// Enumerates the differences between two (artbitrary type) JSON documents/nodes.

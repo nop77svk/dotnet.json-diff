@@ -1,4 +1,5 @@
-namespace NoP77svk.JsonDiff.Tests;
+#if NET8_0_OR_GREATER
+namespace NoP77svk.JsonDiff.SystemTextJson.Tests;
 
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -149,3 +150,4 @@ public class JsonDiff_JsonNode_Tests
         Assert.That(differences, Is.Empty, () => JsonDiff_Data.DifferencesToString(differences, _jsonNodeDiffFormatter));
     }
 }
+#endif
