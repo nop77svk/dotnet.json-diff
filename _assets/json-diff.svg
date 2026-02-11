@@ -1,0 +1,47 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2b0010"/>
+      <stop offset="100%" stop-color="#d00032"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect x="4" y="4" width="120" height="120" rx="26" ry="26" fill="url(#bgGrad)"/>
+
+  <!-- Main motif: 85% of 128, centered -->
+  <g transform="translate(9.6,9.6) scale(0.85)" stroke-linecap="round" stroke-linejoin="round">
+
+    <!-- Left brace -->
+    <path d="
+      M40 28
+      Q30 34 30 48
+      Q30 62 22 68
+      Q30 74 30 88
+      Q30 102 40 108"
+      fill="none"
+      stroke="#00eaff"
+      stroke-width="5"/>
+
+    <!-- Right brace -->
+    <path d="
+      M88 28
+      Q98 34 98 48
+      Q98 62 106 68
+      Q98 74 98 88
+      Q98 102 88 108"
+      fill="none"
+      stroke="#aaff00"
+      stroke-width="5"/>
+
+    <!-- Comparison arrows -->
+    <!-- Left → Right -->
+    <line x1="48" y1="60" x2="64" y2="60" stroke="#ffffff" stroke-width="4"/>
+    <polyline points="60,56 64,60 60,64" fill="none" stroke="#ffffff" stroke-width="4"/>
+
+    <!-- Right → Left -->
+    <line x1="80" y1="76" x2="64" y2="76" stroke="#ffffff" stroke-width="4"/>
+    <polyline points="68,72 64,76 68,80" fill="none" stroke="#ffffff" stroke-width="4"/>
+
+  </g>
+</svg>
