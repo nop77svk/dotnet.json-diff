@@ -18,6 +18,6 @@ Allows you to deep-compare two JSON node trees and see the differences between t
 
 ## Useful Links
 
-- [Source Code](https://github.com/nop77svk/nop77svk.json-diff)
-- [Change Log](https://github.com/nop77svk/nop77svk.json-diff/releases)
+- [Source Code](https://github.com/nop77svk/dotnet.nuget.json-diff)
+- [Change Log](https://github.com/nop77svk/dotnet.nuget.json-diff/releases)
 - [Author](https://www.linkedin.com/in/code-we-trust/)

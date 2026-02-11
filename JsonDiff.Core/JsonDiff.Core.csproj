@@ -14,7 +14,7 @@
 		<PackageType>Library</PackageType>
 		
 		<RepositoryType>git</RepositoryType>
-		<RepositoryUrl>https://github.com/nop77svk/dotnet.nuget.json-diff</RepositoryUrl>
+		<RepositoryUrl>https://github.com/nop77svk/dotnet.nuget.json-diff.git</RepositoryUrl>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
@@ -22,8 +22,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Include="$(ProjectDir)_assets/README.md" Pack="true" PackagePath="/" />
-		<None Include="$(ProjectDir)_assets/json-diff.png" Pack="true" PackagePath="/" />
-		<None Include="$(ProjectDir)_assets/LICENSE" Pack="true" PackagePath="/" />
+		<None Include="$(ProjectDir)../_assets/README.md" Pack="true" PackagePath="/" />
+		<None Include="$(ProjectDir)../_assets/json-diff.png" Pack="true" PackagePath="/" />
+		<None Include="$(ProjectDir)../_assets/LICENSE" Pack="true" PackagePath="/" />
 	</ItemGroup>
 </Project>
