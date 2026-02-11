@@ -11,7 +11,6 @@
 		<PackageIcon>json-diff.png</PackageIcon>
 		<PackageLicenseExpression>CC-BY-SA-4.0</PackageLicenseExpression>
 		<PackageTags>json;diff;comparison;library</PackageTags>
-		<PackageType>Library</PackageType>
 
 		<RepositoryType>git</RepositoryType>
 		<RepositoryUrl>https://github.com/nop77svk/dotnet.nuget.json-diff.git</RepositoryUrl>
