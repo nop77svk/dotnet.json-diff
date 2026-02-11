@@ -1,36 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net10.0;net9.0;net8.0</TargetFrameworks>
+		<TargetFramework>netstandard2.1</TargetFramework>
 		<OutputType>Library</OutputType>
 		<IsPackable>false</IsPackable>
 
 		<RootNamespace>NoP77svk.JsonDiff.Tests</RootNamespace>
 		<AssemblyName>NoP77svk.JsonDiff.Tests</AssemblyName>
-		<PackageId>NoP77svk.JsonDiff.Tests</PackageId>
 		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="coverlet.collector" Version="*" />
-		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="*" />
-		<PackageReference Include="NUnit" Version="*" />
-		<PackageReference Include="NUnit.Analyzers" Version="*" />
-		<PackageReference Include="NUnit3TestAdapter" Version="*" />
+		<Compile Include="..\JsonDiff.Core\IsExternalInit.cs" Link="IsExternalInit.cs" />
+	</ItemGroup>
 
-		<Using Include="NUnit.Framework" />
-
-		<None Update="*_Tests/**/*">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-
-		<None Update="*_Data/**/*">
+	<ItemGroup>
+		<None Update="$(ProjectDir)/*_Data/**/*">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\JsonDiff\JsonDiff.csproj" />
+		<ProjectReference Include="..\JsonDiff.Core\JsonDiff.Core.csproj" />
 	</ItemGroup>
 
 </Project>

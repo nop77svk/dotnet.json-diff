@@ -4,9 +4,9 @@
 		<OutputType>Library</OutputType>
 
 		<RootNamespace>NoP77svk.JsonDiff</RootNamespace>
-		<AssemblyName>NoP77svk.JsonDiff</AssemblyName>
+		<AssemblyName>NoP77svk.JsonDiff.Core</AssemblyName>
 
-		<PackageId>NoP77svk.JsonDiff</PackageId>
+		<PackageId>NoP77svk.JsonDiff.Core</PackageId>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageIcon>json-diff.png</PackageIcon>
 		<PackageLicenseExpression>CC-BY-SA-4.0</PackageLicenseExpression>
@@ -14,7 +14,7 @@
 		<PackageType>Library</PackageType>
 		
 		<RepositoryType>git</RepositoryType>
-		<RepositoryUrl>https://github.com/nop77svk/dotnet.nuget.json-diff</RepositoryUrl>
+		<RepositoryUrl>https://github.com/nop77svk/dotnet.nuget.json-diff.git</RepositoryUrl>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
@@ -22,10 +22,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="System.Text.Json" Version="8.*-*" />
-
-		<None Include="$(ProjectDir)_assets/README.md" Pack="true" PackagePath="/" />
-		<None Include="$(ProjectDir)_assets/json-diff.png" Pack="true" PackagePath="/" />
-		<None Include="$(ProjectDir)_assets/LICENSE" Pack="true" PackagePath="/" />
+		<None Include="$(ProjectDir)../_assets/README.md" Pack="true" PackagePath="/" />
+		<None Include="$(ProjectDir)../_assets/json-diff.png" Pack="true" PackagePath="/" />
+		<None Include="$(ProjectDir)../_assets/LICENSE" Pack="true" PackagePath="/" />
 	</ItemGroup>
 </Project>

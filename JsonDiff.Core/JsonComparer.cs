@@ -1,8 +1,5 @@
 namespace NoP77svk.JsonDiff;
 
-using System.Text.Json;
-using System.Text.Json.Nodes;
-
 /// <summary>
 /// The core JSON comparer implementation.
 /// </summary>
@@ -43,10 +40,16 @@ public class JsonComparer<TNode>
     public IEnumerable<JsonDifference<TNode>> EnumerateDifferences(TNode? leftNode, TNode? rightNode)
         => EnumerateDifferences(jsonPath: "$", leftNode: leftNode, rightNode: rightNode);
 
-    private static IEnumerable<JsonDifference<TNode>> EnumerateBooleanNodeDifferences(string jsonPath, TNode? leftNode, TNode? rightNode, JsonValueKind leftValueKind, JsonValueKind rightValueKind)
+    private static IEnumerable<JsonDifference<TNode>> EnumerateValueKindDifferences(string jsonPath, TNode? leftNode, TNode? rightNode)
     {
-        bool valueLeft = leftValueKind is JsonValueKind.True;
-        bool valueRight = rightValueKind is JsonValueKind.True;
+        yield return new JsonDifference<TNode>(jsonPath, JsonDifferenceSide.Left, leftNode);
+        yield return new JsonDifference<TNode>(jsonPath, JsonDifferenceSide.Right, rightNode);
+    }
+
+    private IEnumerable<JsonDifference<TNode>> EnumerateBooleanNodeDifferences(string jsonPath, TNode? leftNode, TNode? rightNode)
+    {
+        bool valueLeft = _nodeValuesSelector.GetBooleanValue(leftNode);
+        bool valueRight = _nodeValuesSelector.GetBooleanValue(rightNode);
 
         if (valueLeft != valueRight)
         {
@@ -55,25 +58,14 @@ public class JsonComparer<TNode>
         }
     }
 
-    private static IEnumerable<JsonDifference<TNode>> EnumerateValueKindDifferences(string jsonPath, TNode? leftNode, TNode? rightNode)
-    {
-        yield return new JsonDifference<TNode>(jsonPath, JsonDifferenceSide.Left, leftNode);
-        yield return new JsonDifference<TNode>(jsonPath, JsonDifferenceSide.Right, rightNode);
-    }
-
     private IEnumerable<JsonDifference<TNode>> EnumerateDifferences(string jsonPath, TNode? leftNode, TNode? rightNode)
     {
-        JsonValueKind leftValueKind = _nodeValuesSelector.GetValueKind(leftNode);
-        JsonValueKind rightValueKind = _nodeValuesSelector.GetValueKind(rightNode);
+        JsonDiffValueKind leftValueKind = _nodeValuesSelector.GetValueKind(leftNode);
+        JsonDiffValueKind rightValueKind = _nodeValuesSelector.GetValueKind(rightNode);
 
         IEnumerable<JsonDifference<TNode>> result;
 
-        if (leftValueKind is JsonValueKind.True or JsonValueKind.False
-            && rightValueKind is JsonValueKind.True or JsonValueKind.False)
-        {
-            result = EnumerateBooleanNodeDifferences(jsonPath, leftNode, rightNode, leftValueKind, rightValueKind);
-        }
-        else if (leftValueKind != rightValueKind)
+        if (leftValueKind != rightValueKind)
         {
             result = EnumerateValueKindDifferences(jsonPath, leftNode, rightNode);
         }
@@ -81,11 +73,12 @@ public class JsonComparer<TNode>
         {
             result = leftValueKind switch
             {
-                JsonValueKind.String => EnumerateStringValueDifferences(jsonPath, leftNode, rightNode),
-                JsonValueKind.Number => EnumerateNumberValueDifferences(jsonPath, leftNode, rightNode),
-                JsonValueKind.Array => EnumerateArrayElementsDifferences(jsonPath, _nodeValuesSelector.GetArrayValues(leftNode), _nodeValuesSelector.GetArrayValues(rightNode)),
-                JsonValueKind.Object => EnumerateObjectPropertiesDifferences(jsonPath, _nodeValuesSelector.GetObjectProperties(leftNode), _nodeValuesSelector.GetObjectProperties(rightNode)),
-                JsonValueKind.Null => Enumerable.Empty<JsonDifference<TNode>>(),
+                JsonDiffValueKind.Boolean => EnumerateBooleanNodeDifferences(jsonPath, leftNode, rightNode),
+                JsonDiffValueKind.String => EnumerateStringValueDifferences(jsonPath, leftNode, rightNode),
+                JsonDiffValueKind.Number => EnumerateNumberValueDifferences(jsonPath, leftNode, rightNode),
+                JsonDiffValueKind.Array => EnumerateArrayElementsDifferences(jsonPath, _nodeValuesSelector.GetArrayValues(leftNode), _nodeValuesSelector.GetArrayValues(rightNode)),
+                JsonDiffValueKind.Object => EnumerateObjectPropertiesDifferences(jsonPath, _nodeValuesSelector.GetObjectProperties(leftNode), _nodeValuesSelector.GetObjectProperties(rightNode)),
+                JsonDiffValueKind.Null => Enumerable.Empty<JsonDifference<TNode>>(),
                 _ => throw new NotImplementedException($"Comparison for JSON value kind '{leftValueKind}' is not (yet) implemented."),
             };
         }
@@ -240,22 +233,6 @@ public class JsonComparer<TNode>
                 yield return difference;
             }
         }
-    }
-}
-
-public class JsonElementComparer : JsonComparer<JsonElement>
-{
-    public JsonElementComparer()
-        : base(JsonElementDiffValuesSelector.DefaultInstance)
-    {
-    }
-}
-
-public class JsonNodeComparer : JsonComparer<JsonNode?>
-{
-    public JsonNodeComparer()
-        : base(JsonNodeDiffValuesSelector.DefaultInstance)
-    {
     }
 }
 

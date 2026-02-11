@@ -1,13 +1,13 @@
-namespace NoP77svk.JsonDiff.Tests;
+namespace NoP77svk.JsonDiff.SystemTextJson.Tests;
 
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Nodes;
 
-public class JsonDiff_JsonNode_ShuffledKvp_Tests
+using NoP77svk.JsonDiff;
+
+[TestFixture]
+public class JsonDiff_JsonElement_Shuffled_Tests
 {
-    private readonly SimpleJsonDiffFormatter<JsonNode?> _jsonNodeDiffFormatter = new();
-
     private readonly JsonDocumentOptions _jsonDocumentParseOptions = new()
     {
         AllowTrailingCommas = true,
@@ -18,88 +18,85 @@ public class JsonDiff_JsonNode_ShuffledKvp_Tests
         MaxDepth = 20
     };
 
-    private readonly JsonNodeOptions _jsonNodeParseOptions = new()
-    {
-        PropertyNameCaseInsensitive = false
-    };
+    private readonly SimpleJsonDiffFormatter<JsonElement> _jsonElementDiffFormatter = new();
 
     [Test]
     [TestCaseSource(typeof(JsonDiff_Data), nameof(JsonDiff_Data.ShuffledTestCases))]
-    public async Task JsonNode_ShuffledComparisonByKeyAndName_ReturnsEmpty(ShuffledJsonTestCase testCase)
+    public async Task JsonElement_ShuffledComparisonByKeyAndName_ReturnsEmpty(ShuffledJsonTestCase testCase)
     {
         // arrange
         await TestContext.Out.WriteLineAsync($"Original file: {testCase.OriginalFileName}");
         await TestContext.Out.WriteLineAsync($"Shuffled file: {testCase.ShuffledFileName}");
 
         using Stream originalJsonStream = File.OpenRead(testCase.OriginalFileName);
-        JsonNode? originalJsonDocument = await JsonNode.ParseAsync(originalJsonStream, _jsonNodeParseOptions, _jsonDocumentParseOptions);
+        using JsonDocument originalJsonDocument = await JsonDocument.ParseAsync(originalJsonStream, _jsonDocumentParseOptions);
 
         using Stream shuffledJsonStream = File.OpenRead(testCase.ShuffledFileName);
-        JsonNode? shuffledJsonDocument = await JsonNode.ParseAsync(shuffledJsonStream, _jsonNodeParseOptions, _jsonDocumentParseOptions);
+        using JsonDocument shuffledJsonDocument = await JsonDocument.ParseAsync(shuffledJsonStream, _jsonDocumentParseOptions);
 
-        JsonNodeComparer jsonComparer = new()
+        JsonElementComparer jsonComparer = new()
         {
             ArrayElementMatchingStrategy = MatchJsonArrayElementsBy.Key,
             ObjectPropertiesMatchingStrategy = MatchJsonObjectPropertiesBy.Name
         };
 
         // act
-        IEnumerable<JsonDifference<JsonNode?>> differences = jsonComparer.EnumerateDifferences(originalJsonDocument, shuffledJsonDocument);
+        IEnumerable<JsonDifference<JsonElement>> differences = jsonComparer.EnumerateDifferences(originalJsonDocument.RootElement, shuffledJsonDocument.RootElement);
 
         // assert
-        Assert.That(differences, Is.Empty, () => JsonDiff_Data.DifferencesToString(differences, _jsonNodeDiffFormatter));
+        Assert.That(differences, Is.Empty, () => JsonDiff_Data.DifferencesToString(differences, _jsonElementDiffFormatter));
     }
 
     [Test]
     [TestCaseSource(typeof(JsonDiff_Data), nameof(JsonDiff_Data.ShuffledTestCases))]
-    public async Task JsonNode_ShuffledComparisonByPositionAndName_ReturnsEmpty(ShuffledJsonTestCase testCase)
+    public async Task JsonElement_ShuffledComparisonByPositionAndName_ReturnsEmpty(ShuffledJsonTestCase testCase)
     {
         // arrange
         await TestContext.Out.WriteLineAsync($"Original file: {testCase.OriginalFileName}");
         await TestContext.Out.WriteLineAsync($"Shuffled file: {testCase.ShuffledFileName}");
 
         using Stream originalJsonStream = File.OpenRead(testCase.OriginalFileName);
-        JsonNode? originalJsonDocument = await JsonNode.ParseAsync(originalJsonStream, _jsonNodeParseOptions, _jsonDocumentParseOptions);
+        using JsonDocument originalJsonDocument = await JsonDocument.ParseAsync(originalJsonStream, _jsonDocumentParseOptions);
 
         using Stream shuffledJsonStream = File.OpenRead(testCase.ShuffledFileName);
-        JsonNode? shuffledJsonDocument = await JsonNode.ParseAsync(shuffledJsonStream, _jsonNodeParseOptions, _jsonDocumentParseOptions);
+        using JsonDocument shuffledJsonDocument = await JsonDocument.ParseAsync(shuffledJsonStream, _jsonDocumentParseOptions);
 
-        JsonNodeComparer jsonComparer = new()
+        JsonElementComparer jsonComparer = new()
         {
             ArrayElementMatchingStrategy = MatchJsonArrayElementsBy.Position,
             ObjectPropertiesMatchingStrategy = MatchJsonObjectPropertiesBy.Name
         };
 
         // act
-        IEnumerable<JsonDifference<JsonNode?>> differences = jsonComparer.EnumerateDifferences(originalJsonDocument, shuffledJsonDocument);
+        IEnumerable<JsonDifference<JsonElement>> differences = jsonComparer.EnumerateDifferences(originalJsonDocument.RootElement, shuffledJsonDocument.RootElement);
 
         // assert
-        Assert.That(differences, Is.Empty, () => JsonDiff_Data.DifferencesToString(differences, _jsonNodeDiffFormatter));
+        Assert.That(differences, Is.Empty, () => JsonDiff_Data.DifferencesToString(differences, _jsonElementDiffFormatter));
     }
 
     [Test]
     [TestCaseSource(typeof(JsonDiff_Data), nameof(JsonDiff_Data.ShuffledTestCases))]
     [TestCaseSource(typeof(JsonDiff_Data), nameof(JsonDiff_Data.ShuffledKvpTestCases))]
-    public async Task JsonNode_ShuffledComparisonByKeyAndPosition_ReturnsDifferences(ShuffledJsonTestCase testCase)
+    public async Task JsonElement_ShuffledComparisonByKeyAndPosition_ReturnsDifferences(ShuffledJsonTestCase testCase)
     {
         // arrange
         await TestContext.Out.WriteLineAsync($"Original file: {testCase.OriginalFileName}");
         await TestContext.Out.WriteLineAsync($"Shuffled file: {testCase.ShuffledFileName}");
 
         using Stream originalJsonStream = File.OpenRead(testCase.OriginalFileName);
-        JsonNode? originalJsonDocument = await JsonNode.ParseAsync(originalJsonStream, _jsonNodeParseOptions, _jsonDocumentParseOptions);
+        using JsonDocument originalJsonDocument = await JsonDocument.ParseAsync(originalJsonStream, _jsonDocumentParseOptions);
 
         using Stream shuffledJsonStream = File.OpenRead(testCase.ShuffledFileName);
-        JsonNode? shuffledJsonDocument = await JsonNode.ParseAsync(shuffledJsonStream, _jsonNodeParseOptions, _jsonDocumentParseOptions);
+        using JsonDocument shuffledJsonDocument = await JsonDocument.ParseAsync(shuffledJsonStream, _jsonDocumentParseOptions);
 
-        JsonNodeComparer jsonComparer = new()
+        JsonElementComparer jsonComparer = new()
         {
             ArrayElementMatchingStrategy = MatchJsonArrayElementsBy.Key,
             ObjectPropertiesMatchingStrategy = MatchJsonObjectPropertiesBy.Position
         };
 
         // act
-        IEnumerable<JsonDifference<JsonNode?>> differences = jsonComparer.EnumerateDifferences(originalJsonDocument, shuffledJsonDocument);
+        IEnumerable<JsonDifference<JsonElement>> differences = jsonComparer.EnumerateDifferences(originalJsonDocument.RootElement, shuffledJsonDocument.RootElement);
 
         // assert
         Assert.That(differences, Is.Not.Empty);
@@ -108,26 +105,26 @@ public class JsonDiff_JsonNode_ShuffledKvp_Tests
     [Test]
     [TestCaseSource(typeof(JsonDiff_Data), nameof(JsonDiff_Data.ShuffledTestCases))]
     [TestCaseSource(typeof(JsonDiff_Data), nameof(JsonDiff_Data.ShuffledKvpTestCases))]
-    public async Task JsonNode_ShuffledComparisonByPositionAndPosition_ReturnsDifferences(ShuffledJsonTestCase testCase)
+    public async Task JsonElement_ShuffledComparisonByPositionAndPosition_ReturnsDifferences(ShuffledJsonTestCase testCase)
     {
         // arrange
         await TestContext.Out.WriteLineAsync($"Original file: {testCase.OriginalFileName}");
         await TestContext.Out.WriteLineAsync($"Shuffled file: {testCase.ShuffledFileName}");
 
         using Stream originalJsonStream = File.OpenRead(testCase.OriginalFileName);
-        JsonNode? originalJsonDocument = await JsonNode.ParseAsync(originalJsonStream, _jsonNodeParseOptions, _jsonDocumentParseOptions);
+        using JsonDocument originalJsonDocument = await JsonDocument.ParseAsync(originalJsonStream, _jsonDocumentParseOptions);
 
         using Stream shuffledJsonStream = File.OpenRead(testCase.ShuffledFileName);
-        JsonNode? shuffledJsonDocument = await JsonNode.ParseAsync(shuffledJsonStream, _jsonNodeParseOptions, _jsonDocumentParseOptions);
+        using JsonDocument shuffledJsonDocument = await JsonDocument.ParseAsync(shuffledJsonStream, _jsonDocumentParseOptions);
 
-        JsonNodeComparer jsonComparer = new()
+        JsonElementComparer jsonComparer = new()
         {
             ArrayElementMatchingStrategy = MatchJsonArrayElementsBy.Position,
             ObjectPropertiesMatchingStrategy = MatchJsonObjectPropertiesBy.Position
         };
 
         // act
-        IEnumerable<JsonDifference<JsonNode?>> differences = jsonComparer.EnumerateDifferences(originalJsonDocument, shuffledJsonDocument);
+        IEnumerable<JsonDifference<JsonElement>> differences = jsonComparer.EnumerateDifferences(originalJsonDocument.RootElement, shuffledJsonDocument.RootElement);
 
         // assert
         Assert.That(differences, Is.Not.Empty);
@@ -135,37 +132,37 @@ public class JsonDiff_JsonNode_ShuffledKvp_Tests
 
     [Test]
     [TestCaseSource(typeof(JsonDiff_Data), nameof(JsonDiff_Data.ShuffledKvpTestCases))]
-    public async Task JsonNode_ShuffledKvpComparisonByKeyAndName_ReturnsEmpty(ShuffledJsonTestCase testCase)
+    public async Task JsonElement_ShuffledKvpComparisonByKeyAndName_ReturnsEmpty(ShuffledJsonTestCase testCase)
     {
         // arrange
         await TestContext.Out.WriteLineAsync($"Original file: {testCase.OriginalFileName}");
         await TestContext.Out.WriteLineAsync($"Shuffled file: {testCase.ShuffledFileName}");
 
         using Stream originalJsonStream = File.OpenRead(testCase.OriginalFileName);
-        JsonNode? originalJsonDocument = await JsonNode.ParseAsync(originalJsonStream, _jsonNodeParseOptions, _jsonDocumentParseOptions);
+        using JsonDocument originalJsonDocument = await JsonDocument.ParseAsync(originalJsonStream, _jsonDocumentParseOptions);
 
         using Stream shuffledJsonStream = File.OpenRead(testCase.ShuffledFileName);
-        JsonNode? shuffledJsonDocument = await JsonNode.ParseAsync(shuffledJsonStream, _jsonNodeParseOptions, _jsonDocumentParseOptions);
+        using JsonDocument shuffledJsonDocument = await JsonDocument.ParseAsync(shuffledJsonStream, _jsonDocumentParseOptions);
 
-        IJsonDiffNodeValuesSelector<JsonNode?> kvpMatchingNodeValuesSelector = new JsonNodeDiffValuesSelector()
+        IJsonDiffNodeValuesSelector<JsonElement> kvpMatchingNodeValuesSelector = new JsonElementDiffValuesSelector()
         {
-            ArrayElementDescriptorSelector = (index, elementNode) =>
+            ArrayElementDescriptorSelector = (index, element) =>
             {
-                if (elementNode is not JsonObject element)
+                if (element.ValueKind is not JsonValueKind.Object)
                 {
                     return $"element #{index}";
                 }
 
                 string? result = null;
-                if (element.TryGetPropertyValue("key", out JsonNode? keyProperty)
-                    || element.TryGetPropertyValue("id", out keyProperty)
-                    || element.TryGetPropertyValue("type", out keyProperty)
-                    || element.TryGetPropertyValue("org_id", out keyProperty)
-                    || element.TryGetPropertyValue("user_id", out keyProperty)
-                    || element.TryGetPropertyValue("widget_id", out keyProperty))
+                if (element.TryGetProperty("key", out JsonElement keyProperty)
+                    || element.TryGetProperty("id", out keyProperty)
+                    || element.TryGetProperty("type", out keyProperty)
+                    || element.TryGetProperty("org_id", out keyProperty)
+                    || element.TryGetProperty("user_id", out keyProperty)
+                    || element.TryGetProperty("widget_id", out keyProperty))
                 {
-                    result = keyProperty?.GetValueKind() is JsonValueKind.String or JsonValueKind.Number
-                        ? keyProperty.GetValue<string>()
+                    result = keyProperty.ValueKind is JsonValueKind.String or JsonValueKind.Number
+                        ? keyProperty.GetRawText()
                         : null;
                 }
 
@@ -173,41 +170,41 @@ public class JsonDiff_JsonNode_ShuffledKvp_Tests
             }
         };
 
-        JsonComparer<JsonNode?> jsonComparer = new(kvpMatchingNodeValuesSelector)
+        JsonComparer<JsonElement> jsonComparer = new(kvpMatchingNodeValuesSelector)
         {
             ArrayElementMatchingStrategy = MatchJsonArrayElementsBy.Key,
             ObjectPropertiesMatchingStrategy = MatchJsonObjectPropertiesBy.Name
         };
 
         // act
-        IEnumerable<JsonDifference<JsonNode?>> differences = jsonComparer.EnumerateDifferences(originalJsonDocument, shuffledJsonDocument);
+        IEnumerable<JsonDifference<JsonElement>> differences = jsonComparer.EnumerateDifferences(originalJsonDocument.RootElement, shuffledJsonDocument.RootElement);
 
         // assert
-        Assert.That(differences, Is.Empty, () => JsonDiff_Data.DifferencesToString(differences, _jsonNodeDiffFormatter));
+        Assert.That(differences, Is.Empty, () => JsonDiff_Data.DifferencesToString(differences, _jsonElementDiffFormatter));
     }
 
     [Test]
     [TestCaseSource(typeof(JsonDiff_Data), nameof(JsonDiff_Data.ShuffledKvpTestCases))]
-    public async Task JsonNode_ShuffledKvpComparisonByPositionAndName_ReturnsDifferences(ShuffledJsonTestCase testCase)
+    public async Task JsonElement_ShuffledKvpComparisonByPositionAndName_ReturnsDifferences(ShuffledJsonTestCase testCase)
     {
         // arrange
         await TestContext.Out.WriteLineAsync($"Original file: {testCase.OriginalFileName}");
         await TestContext.Out.WriteLineAsync($"Shuffled file: {testCase.ShuffledFileName}");
 
         using Stream originalJsonStream = File.OpenRead(testCase.OriginalFileName);
-        JsonNode? originalJsonDocument = await JsonNode.ParseAsync(originalJsonStream, _jsonNodeParseOptions, _jsonDocumentParseOptions);
+        using JsonDocument originalJsonDocument = await JsonDocument.ParseAsync(originalJsonStream, _jsonDocumentParseOptions);
 
         using Stream shuffledJsonStream = File.OpenRead(testCase.ShuffledFileName);
-        JsonNode? shuffledJsonDocument = await JsonNode.ParseAsync(shuffledJsonStream, _jsonNodeParseOptions, _jsonDocumentParseOptions);
+        using JsonDocument shuffledJsonDocument = await JsonDocument.ParseAsync(shuffledJsonStream, _jsonDocumentParseOptions);
 
-        JsonNodeComparer jsonComparer = new()
+        JsonElementComparer jsonComparer = new()
         {
             ArrayElementMatchingStrategy = MatchJsonArrayElementsBy.Position,
             ObjectPropertiesMatchingStrategy = MatchJsonObjectPropertiesBy.Name
         };
 
         // act
-        IEnumerable<JsonDifference<JsonNode?>> differences = jsonComparer.EnumerateDifferences(originalJsonDocument, shuffledJsonDocument);
+        IEnumerable<JsonDifference<JsonElement>> differences = jsonComparer.EnumerateDifferences(originalJsonDocument.RootElement, shuffledJsonDocument.RootElement);
 
         // assert
         Assert.That(differences, Is.Not.Empty);

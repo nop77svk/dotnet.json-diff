@@ -1,7 +1,6 @@
 #if NET8_0_OR_GREATER
-namespace NoP77svk.JsonDiff.Tests;
+namespace NoP77svk.JsonDiff.SystemTextJson.Tests;
 
-using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 

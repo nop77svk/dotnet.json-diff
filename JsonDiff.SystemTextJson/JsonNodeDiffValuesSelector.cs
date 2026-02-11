@@ -1,6 +1,6 @@
+#if NET8_0_OR_GREATER
 namespace NoP77svk.JsonDiff;
 
-using System.Text.Json;
 using System.Text.Json.Nodes;
 
 /// <summary>
@@ -22,7 +22,9 @@ public sealed class JsonNodeDiffValuesSelector : IJsonDiffNodeValuesSelector<Jso
     /// </summary>
     public static JsonNodeDiffValuesSelector DefaultInstance { get; } = new JsonNodeDiffValuesSelector();
 
-    public JsonValueKind GetValueKind(JsonNode? node) => node?.GetValueKind() ?? JsonValueKind.Null;
+    public JsonDiffValueKind GetValueKind(JsonNode? node) => node?.GetValueKind().ToInternalValueKind() ?? JsonDiffValueKind.Null;
+
+    public bool GetBooleanValue(JsonNode? node) => node?.GetValue<bool>() ?? false;
 
     public string GetStringValue(JsonNode? node) => node?.GetValue<string>() ?? string.Empty;
 
@@ -49,3 +51,4 @@ public sealed class JsonNodeDiffValuesSelector : IJsonDiffNodeValuesSelector<Jso
         .Select((property, index) => new JsonDiffArrayElementDescriptor<JsonNode?>(index, property.Key, property.Value))
         ?? Enumerable.Empty<JsonDiffArrayElementDescriptor<JsonNode?>>();
 }
+#endif
